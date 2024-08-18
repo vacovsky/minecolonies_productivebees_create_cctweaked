@@ -1,4 +1,3 @@
-local destination = peripheral.find("ironchests:crystal_chest")
 local WAIT_SECONDS = 300
 
 local hives = 'productivebees:advanced_'
