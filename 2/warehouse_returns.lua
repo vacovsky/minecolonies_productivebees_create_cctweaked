@@ -1,4 +1,4 @@
-local DROPBOX = 'minecraft:barrel_3'
+local DROPBOX = 'ironchests:crystal_chest_2'
 local WAREHOUSE = 'minecolonies:warehouse'
 
 function ReturnWares()
@@ -14,7 +14,6 @@ function ReturnWares()
     for slot, item in pairs(dropbox.list()) do
         count = 0
         for whi, warehouse in pairs(warehouses) do
-            print(warehouse,item.name, slot)
             count = dropbox.pushItems(warehouse, slot)
         end
         print('Returned', item.name, count)
