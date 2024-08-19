@@ -1,3 +1,4 @@
+shell.openTab("warehouse_returns")
 
 local WAREHOUSE = 'minecolonies:warehouse'
 local MAX_ITEM_COUNT = 64
@@ -8,7 +9,7 @@ function DeliverItem(itemName, itemCount)
     -- ENFORCE MINIMUM ITEM NAME
     if string.len(itemName) < 4 then print('Supplied item name must be at least', ITEM_NAME_MIN, 'letters.') return true end
 
-    if itemCount == nil then itemCount = 0 end
+    if itemCount == nil then itemCount = 64 end
     -- ENFORCE ITEM LIMITS
     if itemCount > MAX_ITEM_COUNT then print('Max item count allowed is', MAX_ITEM_COUNT)
         itemCount = MAX_ITEM_COUNT
@@ -35,6 +36,7 @@ function DeliverItem(itemName, itemCount)
                 foundCount = warehouse.pushItems(DESTINATION_STORAGE, slot, itemCount)
                 -- EXIT WHEN WE HAVE DELIVERED ENOUGH
                 if foundCount >= itemCount then print('Order successfully filled!') break end
+                break
             end
         end
     end
@@ -48,7 +50,7 @@ while true do
     write("\n\nWARES_UI> ")
     local msg = read()
     words = {}
-    for word in msg:gmatch("%w+") do
+    for word in msg:gmatch("%S+") do
         table.insert(words, word)
     end
     pcall(DeliverItem(words[1], tonumber(words[2])))
