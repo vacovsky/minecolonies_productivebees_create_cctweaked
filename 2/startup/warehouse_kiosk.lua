@@ -6,6 +6,7 @@ local DESTINATION_STORAGE = 'ironchests:obsidian_chest_0'
 local ITEM_NAME_MIN = 4
 
 function DeliverItem(itemName, itemCount)
+    if itemName == nil then return true end
     -- ENFORCE MINIMUM ITEM NAME
     if string.len(itemName) < 4 then print('Supplied item name must be at least', ITEM_NAME_MIN, 'letters.') return true end
 
@@ -49,9 +50,12 @@ print('Type an item name and count - if we have any, items will be delivered ins
 while true do
     write("\n\nWARES_UI> ")
     local msg = read()
+    if msg == nil then goto continue end
+
     words = {}
     for word in msg:gmatch("%S+") do
-        table.insert(words, word)
+        pcall(table.insert, words, word)
     end
     pcall(DeliverItem(words[1], tonumber(words[2])))
+    ::continue::
 end
