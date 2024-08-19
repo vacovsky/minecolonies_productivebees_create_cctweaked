@@ -1,5 +1,7 @@
 local WAIT_SECONDS = 30
 local warehouse = peripheral.find("minecolonies:warehouse")
+local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
+
 
 function Main()
     peripherals = peripheral.getNames()
@@ -36,13 +38,15 @@ function TransferItemWithSlot(sourceStorage, sourceSlot, dest, limit, destSlot)
     sourceStorage.pushItems(peripheral.getName(dest), sourceSlot, limit, destSlot)
 end
 
+local LOOPS = 0
 while true do
-    print(redstone.getInput('top'))
     if redstone.getInput('top') then
         pcall(Main)
     else
-        print('Service Offline - Flip the lever!')
+        print('Service Offline - Flip the lever on top!')
     end
-    print('Sleeping', WAIT_SECONDS, 'seconds')
+    LOOPS = LOOPS + 1
+    print('Sleeping', WAIT_SECONDS, 'seconds. Loop #', LOOPS, 'of', REBOOT_AFTER_LOOPS )
     sleep(WAIT_SECONDS)
+    if LOOPS >= REBOOT_AFTER_LOOPS then os.reboot() end
 end
