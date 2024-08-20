@@ -32,7 +32,7 @@ function DepositInAnyWarehouse(sourceStorage, sourceSlot)
     peripherals = peripheral.getNames()
     warehouses_list = {}
     for index, attached_peripheral in pairs(peripherals) do
-        if string.find(warehouses, attached_peripheral) then
+        if string.find(attached_peripheral, warehouses) then
             warehouses_list[#warehouses_list+1] = attached_peripheral
         end
     end
@@ -51,7 +51,7 @@ function GetFromAnyWarehouse(itemName, destination)
     end
     for whi, warehouse in pairs(warehouses_list) do
         warehouse_peripheral = peripheral.wrap(warehouse)
-        for slot, item in pairs(warehouse.list()) do
+        for slot, item in pairs(warehouse_peripheral.list()) do
             if item.name == itemName then
                 print('Restocking', itemName)
                 TransferItem(warehouse_peripheral, slot, destination)
@@ -72,6 +72,7 @@ function TransferItemWithSlot(sourceStorage, sourceSlot, dest, limit, destSlot)
 end
 
 local LOOPS = 0
+print('Starting HONEY BOTTLER')
 while true do
     if redstone.getInput('top') then
         pcall(Main)

@@ -31,15 +31,17 @@ function DeliverItem(itemName, itemCount)
     deliveredItemName = ''
     for whi, warehouseName in pairs(warehouses) do
         warehouse = peripheral.wrap(warehouseName)
+        foundCount = 0
         for slot, item in pairs(warehouse.list()) do
             if string.find(item.name, itemName) then
                 deliveredItemName = item.name
-                foundCount = warehouse.pushItems(DESTINATION_STORAGE, slot, itemCount)
+                foundCount = foundCount + warehouse.pushItems(DESTINATION_STORAGE, slot, itemCount)
                 -- EXIT WHEN WE HAVE DELIVERED ENOUGH
                 if foundCount >= itemCount then print('Order successfully filled!') break end
-                break
+                goto found
             end
         end
+        ::found::
     end
     print('delivered', foundCount, deliveredItemName)
 
