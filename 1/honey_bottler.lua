@@ -1,9 +1,11 @@
 local WAIT_SECONDS = 30
 local warehouse = peripheral.find("minecolonies:warehouse")
 local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
+local warehouses = "minecolonies:warehouse"
 
 
 function Main()
+
     peripherals = peripheral.getNames()
     honey_storage = 'fluidTank_0'
     honey_bottler = 'create:depot_0'
@@ -16,19 +18,52 @@ function Main()
             for slot, item in pairs(container.list()) do
                 if item.name == 'minecraft:honey_bottle' then
                     print('Warehousing honey bottles')
-                    TransferItem(container, slot, warehouse)
+                    DepositInAnyWarehouse(container, slot)
                 end
             end
             -- REFILL WITH EMPTY BOTTLES
-            for slot, item in pairs(warehouse.list()) do
-                if item.name == 'minecraft:glass_bottle' then
-                    print('Restocking empty bottles')
-                    TransferItem(warehouse, slot, container)
-                end
-            end
+            GetFromAnyWarehouse('minecraft:glass_bottle', container)
+            
         end
     end
 end
+
+function DepositInAnyWarehouse(sourceStorage, sourceSlot)
+    peripherals = peripheral.getNames()
+    warehouses_list = {}
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            warehouses_list[#warehouses_list+1] = attached_peripheral
+        end
+    end
+    for whi, warehouse in pairs(warehouses_list) do
+        print(warehouse, sourceSlot)
+        TransferItem(sourceStorage, sourceSlot, warehouse)
+    end
+end
+
+
+function GetFromAnyWarehouse(itemName, destination)
+    peripherals = peripheral.getNames()
+    warehouses_list = {}
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            warehouses_list[#warehouses_list+1] = attached_peripheral
+        end
+    end
+    for whi, warehouse in pairs(warehouses_list) do
+        warehouse_peripheral = peripheral.wrap(warehouse)
+        for slot, item in pairs(warehouse.list()) do
+            if item.name == itemName then
+                print('Restocking', itemName)
+                TransferItem(warehouse_peripheral, slot, container)
+                goto found
+            end
+        end
+        ::found::
+    end
+end
+
 
 function TransferItem(sourceStorage, sourceSlot, dest)
     sourceStorage.pushItems(peripheral.getName(dest), sourceSlot)

@@ -22,6 +22,7 @@ function ReturnWares()
     return true
 end
 
+print('Starting automated warehouse return system...')
 while true do
     pcall(ReturnWares)
     sleep(15)

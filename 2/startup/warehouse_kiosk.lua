@@ -46,7 +46,7 @@ function DeliverItem(itemName, itemCount)
     return true
 end
 
-print('Type an item name and count - if we have any, items will be delivered instantly to the attached chest.\n\nUse format: <itemname> <count>')
+print('Type an item name and count - if we have any, items will be delivered instantly to the attached chest.\n\nUse format: <itemname> <count>\nexample:  iron_ingot 32')
 while true do
     write("\n\nWARES_UI> ")
     local msg = read()

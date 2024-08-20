@@ -1,12 +1,13 @@
-local WAIT_SECONDS = 300
+local WAIT_SECONDS = 180
 local REBOOT_AFTER_LOOPS = 6 -- REBOOT AFTER THIS MANY LOOPS
+local SMELT_FLESH = false
 
 local hives = 'productivebees:advanced_'
 local fuges = 'productivebees:centrifuge'
 local furnaces = 'minecraft:furnace'
 local blast_furnaces = 'minecraft:blast_furnace'
-
-local warehouse = peripheral.find("minecolonies:warehouse")
+local warehouses = "minecolonies:warehouse"
+-- local warehouse = peripheral.find("minecolonies:warehouse")
 
 function Main()
     peripherals = peripheral.getNames()
@@ -14,11 +15,15 @@ function Main()
     furnaces_list = {}
     blast_furnaces_list = {}
     fuge_list = {}
-
+    warehouses_list = {}
     honey_bottler = 'create:depot_0'
 
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
     for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            warehouses_list[#warehouses_list+1] = attached_peripheral
+        end
+
         if string.find(attached_peripheral, fuges) then
             fuge_list[#fuge_list+1] = attached_peripheral
         end
@@ -37,9 +42,11 @@ function Main()
         if string.find(attached_peripheral, hives) then
             container = peripheral.wrap(attached_peripheral)
             for slot, item in pairs(container.list()) do
-                if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
-                    print('Warehousing:', item.name)
-                    TransferItem(container, slot, warehouse)
+                for whi, warehouse in pairs(warehouses_list) do
+                    if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
+                        print('Warehousing:', item.name)
+                        DepositInAnyWarehouse(container, slot)
+                    end
                 end
             end
 
@@ -48,16 +55,20 @@ function Main()
         -- REMOVE SMELTED ITEMS FROM BLAST FURNACES
         if string.find(attached_peripheral, blast_furnaces) then
             for f, blast_furnace in pairs(blast_furnaces_list) do
-                source_blast_furnace = peripheral.wrap(blast_furnace)
-                TransferItem(source_blast_furnace, 3, warehouse)
+                for whi, warehouse in pairs(warehouses_list) do
+                    source_blast_furnace = peripheral.wrap(blast_furnace)
+                    DepositInAnyWarehouse(source_blast_furnace, 3)
+                end
             end
         end
 
         -- REMOVE SMELTED ITEMS FROM FURNACES
         if string.find(attached_peripheral, furnaces) then
             for f, furnace in pairs(furnaces_list) do
-                source_furnace = peripheral.wrap(furnace)
-                TransferItem(source_furnace, 3, warehouse)
+                for whi, warehouse in pairs(warehouses_list) do
+                    source_furnace = peripheral.wrap(furnace)
+                    DepositInAnyWarehouse(container, 3)
+                end
             end
         end
 
@@ -96,7 +107,8 @@ function Main()
                             dest_blast_furnace = peripheral.wrap(blast_furnace)
                             TransferItemWithSlot(container, slot, dest_blast_furnace, 64, 1)
                         end
-                        if string.find(item.name, 'rotten_flesh') then
+                        -- SMELT ROTTEN FLESH INTO LEATHER
+                        if SMELT_FLESH and string.find(item.name, 'rotten_flesh') then
                             for f, furnace in pairs(furnaces_list) do
                                 print('Firing:', item.name, furnace)
                                 dest_furnace = peripheral.wrap(furnace)
@@ -105,7 +117,7 @@ function Main()
                         end
                     end
                     -- OTHERWISE, SEND TO WAREHOUSE
-                    TransferItem(container, slot, warehouse)
+                    DepositInAnyWarehouse(container, slot)
 
                 elseif string.find(item.name, 'productivebees:wax') then
                     -- FILL BLAST FURNACES WITH FUEL
@@ -122,12 +134,48 @@ function Main()
                     end
 
                     -- LAST RESORT, SEND TO WAREHOUSE
-                    TransferItem(container, slot, warehouse)
-                elseif string.find(item.name, 'productivebees:sugarbag_honeycomb') then
-                    TransferItem(container, slot, warehouse)
-                end
+                    DepositInAnyWarehouse(container, slot)
+                    elseif string.find(item.name, 'productivebees:sugarbag_honeycomb') then
+                        for whi, warehouse in pairs(warehouses_list) do
+                            DepositInAnyWarehouse(container, slot)
+                        end
+                    end
             end
         end
+    end
+end
+
+function DepositInAnyWarehouse(sourceStorage, sourceSlot)
+    peripherals = peripheral.getNames()
+    warehouses_list = {}
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            warehouses_list[#warehouses_list+1] = attached_peripheral
+        end
+    end
+    for whi, warehouse in pairs(warehouses_list) do
+        TransferItem(sourceStorage, sourceSlot, warehouse)
+    end
+end
+
+function GetFromAnyWarehouse(itemName, destination)
+    peripherals = peripheral.getNames()
+    warehouses_list = {}
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            warehouses_list[#warehouses_list+1] = attached_peripheral
+        end
+    end
+    for whi, warehouse in pairs(warehouses_list) do
+        warehouse_peripheral = peripheral.wrap(warehouse)
+        for slot, item in pairs(warehouse.list()) do
+            if item.name == itemName then
+                print('Restocking', itemName)
+                TransferItem(warehouse_peripheral, slot, container)
+                goto found
+            end
+        end
+        ::found::
     end
 end
 
@@ -137,6 +185,41 @@ end
 
 function TransferItemWithSlot(sourceStorage, sourceSlot, dest, limit, destSlot)
     sourceStorage.pushItems(peripheral.getName(dest), sourceSlot, limit, destSlot)
+end
+
+
+function DepositInAnyWarehouse(sourceStorage, sourceSlot)
+    peripherals = peripheral.getNames()
+    warehouses_list = {}
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            warehouses_list[#warehouses_list+1] = attached_peripheral
+        end
+    end
+    for whi, warehouse in pairs(warehouses_list) do
+        TransferItem(sourceStorage, sourceSlot, warehouse)
+    end
+end
+
+function GetFromAnyWarehouse(itemName, destination)
+    peripherals = peripheral.getNames()
+    warehouses_list = {}
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            warehouses_list[#warehouses_list+1] = attached_peripheral
+        end
+    end
+    for whi, warehouse in pairs(warehouses_list) do
+        warehouse_peripheral = peripheral.wrap(warehouse)
+        for slot, item in pairs(warehouse.list()) do
+            if item.name == itemName then
+                print('Restocking', itemName)
+                TransferItem(warehouse_peripheral, slot, container)
+                goto found
+            end
+        end
+        ::found::
+    end
 end
 
 LOOPS = 0
