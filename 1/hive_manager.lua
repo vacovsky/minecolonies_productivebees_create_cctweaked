@@ -15,15 +15,10 @@ function Main()
     furnaces_list = {}
     blast_furnaces_list = {}
     fuge_list = {}
-    warehouses_list = {}
     honey_bottler = 'create:depot_0'
 
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
     for index, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
-            warehouses_list[#warehouses_list+1] = attached_peripheral
-        end
-
         if string.find(attached_peripheral, fuges) then
             fuge_list[#fuge_list+1] = attached_peripheral
         end
@@ -42,33 +37,26 @@ function Main()
         if string.find(attached_peripheral, hives) then
             container = peripheral.wrap(attached_peripheral)
             for slot, item in pairs(container.list()) do
-                for whi, warehouse in pairs(warehouses_list) do
-                    if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
-                        print('Warehousing:', item.name)
-                        DepositInAnyWarehouse(container, slot)
-                    end
+                if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
+                    print('Warehousing:', item.name)
+                    DepositInAnyWarehouse(container, slot)
                 end
             end
-
         end
 
         -- REMOVE SMELTED ITEMS FROM BLAST FURNACES
         if string.find(attached_peripheral, blast_furnaces) then
             for f, blast_furnace in pairs(blast_furnaces_list) do
-                for whi, warehouse in pairs(warehouses_list) do
-                    source_blast_furnace = peripheral.wrap(blast_furnace)
-                    DepositInAnyWarehouse(source_blast_furnace, 3)
-                end
+                source_blast_furnace = peripheral.wrap(blast_furnace)
+                DepositInAnyWarehouse(source_blast_furnace, 3)
             end
         end
 
         -- REMOVE SMELTED ITEMS FROM FURNACES
         if string.find(attached_peripheral, furnaces) then
             for f, furnace in pairs(furnaces_list) do
-                for whi, warehouse in pairs(warehouses_list) do
-                    source_furnace = peripheral.wrap(furnace)
-                    DepositInAnyWarehouse(container, 3)
-                end
+                source_furnace = peripheral.wrap(furnace)
+                DepositInAnyWarehouse(container, 3)
             end
         end
 
@@ -136,9 +124,7 @@ function Main()
                     -- LAST RESORT, SEND TO WAREHOUSE
                     DepositInAnyWarehouse(container, slot)
                     elseif string.find(item.name, 'productivebees:sugarbag_honeycomb') then
-                        for whi, warehouse in pairs(warehouses_list) do
-                            DepositInAnyWarehouse(container, slot)
-                        end
+                        DepositInAnyWarehouse(container, slot)
                     end
             end
         end
