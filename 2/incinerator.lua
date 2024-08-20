@@ -1,14 +1,16 @@
 
 JUNKLIST_CHEST = ''
 
-TRASHAN = ''
+TRASHAN = 'ironchests:obsidian_barrel_0'
 
 function IncinerateJunk()
     -- JUNK ITEMS are defined by what's in the designated trash chest.
 
     
     -- LOAD JUNK ITEM LIST
-    junk = {}
+    junk = {
+        
+    }
     
     -- LOOP THROUGH JUNK CHEST TO CONFIRM IF ALL SHOULD BE DELETED
 
@@ -18,3 +20,4 @@ end
 
 print('Starting junk incinerator...')
 pcall(IncinerateJunk)
+a

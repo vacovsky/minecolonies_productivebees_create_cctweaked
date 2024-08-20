@@ -68,7 +68,7 @@ function Main()
                     if string.find(item.name, 'productivebees:') then
                         for f, fuge in pairs(fuge_list) do
                             dest_fuge = peripheral.wrap(fuge)
-                            print('Spinning:', item.name)
+                            -- print('Spinning:', item.name)
                             TransferItem(hive, slot, dest_fuge)
                         end
                     end
@@ -136,6 +136,7 @@ function DepositInAnyWarehouse(sourceStorage, sourceSlot)
     warehouses_list = {}
     for index, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, warehouses) then
+            print(attached_peripheral)
             warehouses_list[#warehouses_list+1] = attached_peripheral
         end
     end
@@ -178,7 +179,7 @@ function DepositInAnyWarehouse(sourceStorage, sourceSlot)
     peripherals = peripheral.getNames()
     warehouses_list = {}
     for index, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
+        if string.find(warehouses, attached_peripheral) then
             warehouses_list[#warehouses_list+1] = attached_peripheral
         end
     end
@@ -200,7 +201,7 @@ function GetFromAnyWarehouse(itemName, destination)
         for slot, item in pairs(warehouse.list()) do
             if item.name == itemName then
                 print('Restocking', itemName)
-                TransferItem(warehouse_peripheral, slot, container)
+                TransferItem(warehouse_peripheral, slot, destination)
                 goto found
             end
         end
@@ -209,6 +210,8 @@ function GetFromAnyWarehouse(itemName, destination)
 end
 
 LOOPS = 0
+print('Starting HIVE MANAGER...')
+
 while true do
     if redstone.getInput('top') then
         pcall(Main)

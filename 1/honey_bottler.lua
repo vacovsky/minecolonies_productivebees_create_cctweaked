@@ -32,16 +32,14 @@ function DepositInAnyWarehouse(sourceStorage, sourceSlot)
     peripherals = peripheral.getNames()
     warehouses_list = {}
     for index, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
+        if string.find(warehouses, attached_peripheral) then
             warehouses_list[#warehouses_list+1] = attached_peripheral
         end
     end
     for whi, warehouse in pairs(warehouses_list) do
-        print(warehouse, sourceSlot)
         TransferItem(sourceStorage, sourceSlot, warehouse)
     end
 end
-
 
 function GetFromAnyWarehouse(itemName, destination)
     peripherals = peripheral.getNames()
@@ -56,7 +54,7 @@ function GetFromAnyWarehouse(itemName, destination)
         for slot, item in pairs(warehouse.list()) do
             if item.name == itemName then
                 print('Restocking', itemName)
-                TransferItem(warehouse_peripheral, slot, container)
+                TransferItem(warehouse_peripheral, slot, destination)
                 goto found
             end
         end
