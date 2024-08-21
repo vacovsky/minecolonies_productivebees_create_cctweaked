@@ -2,6 +2,7 @@ local wh = require("warehouse_interface")
 local recipes = require("crafting_recipes")
 local me = 'turtle_0'
 local minBottles = 256
+local minHoneyBottles = 128
 
 function CraftItemFromRecipe(recipe, count)
     -- CLEAR INVENTORY
@@ -41,19 +42,21 @@ end
 
 while true do
     local totalInWh = 0
+    local totalHoneyInWh = 0
     local wh = peripheral.find("minecolonies:warehouse")
     for slot, item in pairs(wh.list()) do
         if item.name == 'minecraft:glass_bottle' then
             totalInWh = totalInWh + wh.getItemDetail(slot).count
         end
     end 
-    if totalInWh < minBottles then
-        print('Low on bottles', totalInWh, 'of', minBottles)
+    if totalInWh < minBottles and totalHoneyInWh < minHoneyBottles then
+        print('Low on honey/bottles:', totalHoneyInWh,  totalInWh)
         print('making more!')
         -- pcall(CraftItemFromRecipe(recipes.glass_bottle))
         CraftItemFromRecipe(recipes.glass_bottle)
     else
         print('Bottle stock looks good at', totalInWh, '- checking again later!')
+        print('Honey bottle stock looks good at', totalHoneyInWh, '- checking again later!')
     end
     sleep(600)
 end
