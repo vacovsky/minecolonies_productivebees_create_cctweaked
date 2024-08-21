@@ -17,6 +17,7 @@ function Main()
     fuge_list = {}
     honey_bottler = 'create:depot_0'
 
+    local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
     for index, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, fuges) then
@@ -87,7 +88,6 @@ function Main()
             -- PUSH THE REST
             for slot, item in pairs(container.list()) do
                 if not string.find(item.name, 'productivebees:') then
-
                     -- GRAB RAW ORES FOR PROCESSING
                     if string.find(item.name, 'minecraft:raw_') or string.find(item.name, 'minecraft:ancient_debris')then
                         for f, blast_furnace in pairs(blast_furnaces_list) do
@@ -105,7 +105,7 @@ function Main()
                         end
                     end
                     -- OTHERWISE, SEND TO WAREHOUSE
-                    DepositInAnyWarehouse(container, slot)
+                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
 
                 elseif string.find(item.name, 'productivebees:wax') then
                     -- FILL BLAST FURNACES WITH FUEL
@@ -120,50 +120,18 @@ function Main()
                         print('Fueling:', furnace)
                         TransferItemWithSlot(container, slot, dest_furnace, 64, 2)
                     end
-
                     -- LAST RESORT, SEND TO WAREHOUSE
-                    DepositInAnyWarehouse(container, slot)
-                    elseif string.find(item.name, 'productivebees:sugarbag_honeycomb') then
-                        DepositInAnyWarehouse(container, slot)
-                    end
+                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                end
+                if string.find(item.name, 'productivebees:sugarbag_honeycomb') then
+                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                end
             end
         end
     end
+    print('\n\nItems warehoused:', totalWarehousedThisRun)
 end
 
-function DepositInAnyWarehouse(sourceStorage, sourceSlot)
-    peripherals = peripheral.getNames()
-    warehouses_list = {}
-    for index, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
-            warehouses_list[#warehouses_list+1] = attached_peripheral
-        end
-    end
-    for whi, warehouse in pairs(warehouses_list) do
-        TransferItem(sourceStorage, sourceSlot, warehouse)
-    end
-end
-
-function GetFromAnyWarehouse(itemName, destination)
-    peripherals = peripheral.getNames()
-    warehouses_list = {}
-    for index, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
-            warehouses_list[#warehouses_list+1] = attached_peripheral
-        end
-    end
-    for whi, warehouse in pairs(warehouses_list) do
-        warehouse_peripheral = peripheral.wrap(warehouse)
-        for slot, item in pairs(warehouse_peripheral.list()) do
-            if item.name == itemName then
-                print('Restocking', itemName)
-                TransferItem(warehouse_peripheral, slot, destination)
-                goto found
-            end
-        end
-        ::found::
-    end
-end
 
 function TransferItem(sourceStorage, sourceSlot, dest)
     sourceStorage.pushItems(peripheral.getName(dest), sourceSlot)
@@ -175,45 +143,65 @@ end
 
 
 function DepositInAnyWarehouse(sourceStorage, sourceSlot)
-    peripherals = peripheral.getNames()
-    warehouses_list = {}
-    for index, attached_peripheral in pairs(peripherals) do
-        if string.find(warehouses, attached_peripheral) then
-            warehouses_list[#warehouses_list+1] = attached_peripheral
-        end
-    end
-    for whi, warehouse in pairs(warehouses_list) do
-        TransferItem(sourceStorage, sourceSlot, warehouse)
-    end
-end
-
-function GetFromAnyWarehouse(itemName, destination)
-    peripherals = peripheral.getNames()
-    warehouses_list = {}
+    local movedItemCount = 0
+    local peripherals = peripheral.getNames()
+    local warehouses_list = {}
     for index, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, warehouses) then
             warehouses_list[#warehouses_list+1] = attached_peripheral
         end
     end
     for whi, warehouse in pairs(warehouses_list) do
-        warehouse_peripheral = peripheral.wrap(warehouse)
-        for slot, item in pairs(warehouse_peripheral.list()) do
-            if item.name == itemName then
-                print('Restocking', itemName)
-                TransferItem(warehouse_peripheral, slot, destination)
-                goto found
-            end
+        movedItemCount = movedItemCount + sourceStorage.pushItems(warehouse, sourceSlot)
+    end
+    return movedItemCount
+end
+
+function GetFromAnyWarehouse(itemName, destination, itemCount, guess)
+    -- COLLECT WAREHOUSE NAMES
+    local peripherals = peripheral.getNames()
+    local warehouses_list = {}
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, warehouses) then
+            -- print(attached_peripheral)
+            warehouses_list[#warehouses_list+1] = attached_peripheral
         end
+    end
+
+    -- SEARCH EACH WAREHOUSE FOR ITEM
+    local foundCount = 0
+    for whi, warehouse in pairs(warehouses_list) do
+        local whp = peripheral.wrap(warehouse)
+        for slot, item in pairs(whp.list()) do
+            -- must be exact name match
+            if not guess then
+                if item.name == itemName then
+                    local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount)
+                    foundCount = foundCount + pushedCount
+                    if foundCount >= itemCount then print('Order successfully filled!')
+                        -- EXIT WHEN WE HAVE DELIVERED ENOUGH
+                        print('Returned', itemCount, itemName)
+                        goto found
+                    end
+                end
+            end
+            -- TODO fuzzy match here
+            -- end fuzzy
+        end
+        if itemCount < foundCount then print('Only located', foundCount, 'of', itemCount) end
         ::found::
     end
+    return foundCount
 end
+
 
 LOOPS = 0
 print('Starting HIVE MANAGER...')
 
 while true do
     if redstone.getInput('top') then
-        pcall(Main)
+        -- pcall(Main)
+        Main()
     else
         print('Service Offline - Flip the lever on top!')
     end

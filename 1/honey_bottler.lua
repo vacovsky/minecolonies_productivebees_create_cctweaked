@@ -35,6 +35,7 @@ function Main()
             if restockNum > 0 then print('Restocked', restockNum, 'glass bottles') end
         end
     end
+    print('\n')
 end
 
 function DepositInAnyWarehouse(sourceStorage, sourceSlot)
@@ -90,20 +91,12 @@ function GetFromAnyWarehouse(itemName, destination, itemCount, guess)
 end
 
 
-function TransferItem(sourceStorage, sourceSlot, dest)
-    sourceStorage.pushItems(peripheral.getName(dest), sourceSlot)
-end
-
-function TransferItemWithSlot(sourceStorage, sourceSlot, dest, limit, destSlot)
-    sourceStorage.pushItems(peripheral.getName(dest), sourceSlot, limit, destSlot)
-end
-
 local LOOPS = 0
 print('Starting HONEY BOTTLER')
 while true do
     if redstone.getInput('top') then
-        -- pcall(Main)
-        Main()
+        pcall(Main)
+        -- Main()
     else
         print('Service Offline - Flip the lever on top!')
     end
