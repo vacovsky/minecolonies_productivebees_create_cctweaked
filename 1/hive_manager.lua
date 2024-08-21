@@ -10,12 +10,12 @@ local warehouses = "minecolonies:warehouse"
 -- local warehouse = peripheral.find("minecolonies:warehouse")
 
 function Main()
-    peripherals = peripheral.getNames()
-    honey_storage = 'fluidTank_0'
-    furnaces_list = {}
-    blast_furnaces_list = {}
-    fuge_list = {}
-    honey_bottler = 'create:depot_0'
+    local peripherals = peripheral.getNames()
+    local honey_storage = 'fluidTank_0'
+    local furnaces_list = {}
+    local blast_furnaces_list = {}
+    local fuge_list = {}
+    local honey_bottler = 'create:depot_0'
 
     local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
@@ -77,7 +77,7 @@ function Main()
 
         -- TRANSFER FUGE-PROCESSED MATERIALS TO WAREHOUSE 
         if string.find(attached_peripheral, fuges) then
-            container = peripheral.wrap(attached_peripheral)
+            local container = peripheral.wrap(attached_peripheral)
             -- PUSH HONEY TO HONEY STORAGE VESSEL
             print('Tranferring honey')
             container.pushFluid(honey_storage)
@@ -89,14 +89,14 @@ function Main()
                     if string.find(item.name, 'minecraft:raw_') or string.find(item.name, 'minecraft:ancient_debris')then
                         for f, blast_furnace in pairs(blast_furnaces_list) do
                             print('Firing:', item.name, blast_furnace)
-                            dest_blast_furnace = peripheral.wrap(blast_furnace)
+                            local dest_blast_furnace = peripheral.wrap(blast_furnace)
                             TransferItemWithSlot(container, slot, dest_blast_furnace, 64, 1)
                         end
                         -- SMELT ROTTEN FLESH INTO LEATHER
                         if SMELT_FLESH and string.find(item.name, 'rotten_flesh') then
                             for f, furnace in pairs(furnaces_list) do
                                 print('Firing:', item.name, furnace)
-                                dest_furnace = peripheral.wrap(furnace)
+                                local dest_furnace = peripheral.wrap(furnace)
                                 TransferItemWithSlot(container, slot, dest_furnace, 64, 1)
                             end
                         end
@@ -107,13 +107,13 @@ function Main()
                 elseif string.find(item.name, 'productivebees:wax') then
                     -- FILL BLAST FURNACES WITH FUEL
                     for f, blast_furnace in pairs(blast_furnaces_list) do
-                        dest_blast_furnace = peripheral.wrap(blast_furnace)
+                        local dest_blast_furnace = peripheral.wrap(blast_furnace)
                         print('Fueling:', blast_furnace)
                         TransferItemWithSlot(container, slot, dest_blast_furnace, 64, 2)
                     end
                     -- FILL FURNACES WITH FUEL
                     for f, furnace in pairs(furnaces_list) do
-                        dest_furnace = peripheral.wrap(furnace)
+                        local dest_furnace = peripheral.wrap(furnace)
                         print('Fueling:', furnace)
                         TransferItemWithSlot(container, slot, dest_furnace, 64, 2)
                     end
