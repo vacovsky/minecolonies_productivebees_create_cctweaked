@@ -34,37 +34,35 @@ function Main()
     end
 
     for index, attached_peripheral in pairs(peripherals) do
+
         -- TRANSFER WOOD/STONE TO WAREHOUSE
         if string.find(attached_peripheral, hives) then
-            container = peripheral.wrap(attached_peripheral)
+            local container = peripheral.wrap(attached_peripheral)
             for slot, item in pairs(container.list()) do
                 if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
                     print('Warehousing:', item.name)
-                    DepositInAnyWarehouse(container, slot)
+                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, 3)
                 end
             end
         end
 
         -- REMOVE SMELTED ITEMS FROM BLAST FURNACES
         if string.find(attached_peripheral, blast_furnaces) then
-            for f, blast_furnace in pairs(blast_furnaces_list) do
-                source_blast_furnace = peripheral.wrap(blast_furnace)
-                DepositInAnyWarehouse(source_blast_furnace, 3)
-            end
+            local container = peripheral.wrap(attached_peripheral)
+            totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, 3)
         end
 
         -- REMOVE SMELTED ITEMS FROM FURNACES
         if string.find(attached_peripheral, furnaces) then
-            for f, furnace in pairs(furnaces_list) do
-                source_furnace = peripheral.wrap(furnace)
-                DepositInAnyWarehouse(container, 3)
-            end
+            local container = peripheral.wrap(attached_peripheral)
+            totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, 3)
         end
 
         -- TRANSFER COMBS TO FUGES
         for i, attached_peripheral in pairs(peripherals) do
             if string.find(attached_peripheral, hives) then
                 hive = peripheral.wrap(attached_peripheral)
+
                 for slot, item in pairs(hive.list()) do
                     if string.find(item.name, 'productivebees:') then
                         for f, fuge in pairs(fuge_list) do
@@ -80,7 +78,6 @@ function Main()
         -- TRANSFER FUGE-PROCESSED MATERIALS TO WAREHOUSE 
         if string.find(attached_peripheral, fuges) then
             container = peripheral.wrap(attached_peripheral)
-
             -- PUSH HONEY TO HONEY STORAGE VESSEL
             print('Tranferring honey')
             container.pushFluid(honey_storage)
