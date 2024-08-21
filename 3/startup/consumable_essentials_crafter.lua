@@ -44,11 +44,20 @@ while true do
     local totalInWh = 0
     local totalHoneyInWh = 0
     local wh = peripheral.find("minecolonies:warehouse")
+
+    -- CHECK BOTTLES
     for slot, item in pairs(wh.list()) do
         if item.name == 'minecraft:glass_bottle' then
             totalInWh = totalInWh + wh.getItemDetail(slot).count
         end
+    end
+    -- CHECK HONEY
+    for slot, item in pairs(wh.list()) do
+        if item.name == 'minecraft:honey_bottle' then
+            totalHoneyInWh = totalHoneyInWh + wh.getItemDetail(slot).count
+        end
     end 
+
     if totalInWh < minBottles and totalHoneyInWh < minHoneyBottles then
         print('Low on honey/bottles:', totalHoneyInWh,  totalInWh)
         print('making more!')
