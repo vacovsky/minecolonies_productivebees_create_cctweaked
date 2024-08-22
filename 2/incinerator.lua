@@ -8,7 +8,7 @@ local JUNK = {
     'minecraft:snowball',
     'minecraft:carrot',
     'minecraft:potato',
-    'farm_and_charm:corn',
+    -- 'farm_and_charm:corn',
     'farm_and_charm:kernels',
 }
 
@@ -24,7 +24,7 @@ print('Starting junk incinerator...')
 while true do
     -- pcall(IncinerateJunk)
     IncinerateJunk()
-    sleep(15)
+    sleep(120)
 
 
     -- TODO

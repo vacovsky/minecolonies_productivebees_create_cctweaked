@@ -4,7 +4,12 @@ local crafting_recipes = {
         {'nil', 'minecraft:glass', 'nil', 'nil'},
         {'nil', 'nil', 'nil', 'nil'},
         {'nil', 'nil', 'nil', 'nil'}
+    },
+    bread = {
+        {'farm_and_charm:corn', 'farm_and_charm:corn', 'farm_and_charm:corn', 'nil'},
+        {'nil', 'nil', 'nil', 'nil'},
+        {'nil', 'nil', 'nil', 'nil'},
+        {'nil', 'nil', 'nil', 'nil'}
     }
 }
-
 return crafting_recipes

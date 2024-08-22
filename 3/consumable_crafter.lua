@@ -67,6 +67,10 @@ while true do
         print('Bottle stock looks good at', totalInWh, '- checking again later!')
         print('Honey bottle stock looks good at', totalHoneyInWh, '- checking again later!')
     end
-    sleep(600)
+
+    -- CRAFT SOME BREAD TOO
+    CraftItemFromRecipe(recipes.bread)
+
+    sleep(500)
 end
 -- CHECK WAREHOUSE FOR MINIMUM AMOUNT OF ITEM, THEN CRAFT IF MINIMUM NOT MET?
