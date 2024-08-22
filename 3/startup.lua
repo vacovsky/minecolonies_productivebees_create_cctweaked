@@ -1,2 +1,2 @@
-shell.openTab("glass_blower")
-shell.openTab("consumable_essentials_crafter")
+shell.openTab("furnace_attendant")
+shell.openTab("consumable_crafter")

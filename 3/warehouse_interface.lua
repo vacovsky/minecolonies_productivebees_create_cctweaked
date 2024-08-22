@@ -17,7 +17,7 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     return movedItemCount
 end
 
-function warehouse_interface.GetFromAnyWarehouse(itemName, destination, itemCount, guess)
+function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
@@ -35,7 +35,8 @@ function warehouse_interface.GetFromAnyWarehouse(itemName, destination, itemCoun
             -- must be exact name match
             if not guess then
                 if item.name == itemName then
-                    local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount)
+                    print(destination, slot, itemCount - foundCount, toSlot)
+                    local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
                     foundCount = foundCount + pushedCount
                     if foundCount >= itemCount then print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
