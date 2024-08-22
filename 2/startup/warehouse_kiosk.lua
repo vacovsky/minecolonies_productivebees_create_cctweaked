@@ -1,6 +1,6 @@
 shell.openTab("warehouse_returns")
-shell.openTab("incinerator")
 shell.openTab("warehouse_pruner")
+shell.openTab("incinerator")
 
 local WAREHOUSE = 'minecolonies:warehouse'
 local MAX_ITEM_COUNT = 64

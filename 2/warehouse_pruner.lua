@@ -44,5 +44,5 @@ end
 
 while true do
     PruneWarehouse()
-    sleep(60)
+    sleep(600)
 end

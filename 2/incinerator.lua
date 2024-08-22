@@ -8,7 +8,7 @@ local JUNK = {
     'minecraft:snowball',
     -- 'minecraft:carrot',
     -- 'minecraft:potato',
-    'minecraft:cobbled_deepslate',
+    -- 'minecraft:cobbled_deepslate',
     -- 'minecraft:nether_quartz',
     -- 'farm_and_charm:corn',
     'farm_and_charm:kernels',
