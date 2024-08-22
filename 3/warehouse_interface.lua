@@ -35,7 +35,6 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
             -- must be exact name match
             if not guess then
                 if item.name == itemName then
-                    print(destination, slot, itemCount - foundCount, toSlot)
                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
                     foundCount = foundCount + pushedCount
                     if foundCount >= itemCount then print('Order successfully filled!')
