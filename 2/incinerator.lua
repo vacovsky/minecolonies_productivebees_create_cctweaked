@@ -6,10 +6,13 @@ JUNKLIST_CHEST = ''
 local JUNK = {
     'productivebees:wax',
     'minecraft:snowball',
-    'minecraft:carrot',
-    'minecraft:potato',
+    -- 'minecraft:carrot',
+    -- 'minecraft:potato',
+    'minecraft:cobbled_deepslate',
+    -- 'minecraft:nether_quartz',
     -- 'farm_and_charm:corn',
     'farm_and_charm:kernels',
+    
 }
 
 local TRASHCAN = 'ironchests:obsidian_barrel_1'
