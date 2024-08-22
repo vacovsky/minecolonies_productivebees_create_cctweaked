@@ -1,6 +1,8 @@
+local warehouse_interface = { _version = '0.0.1' }
+
 local warehouses = "minecolonies:warehouse"
 
-function DepositInAnyWarehouse(sourceStorage, sourceSlot)
+function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     local movedItemCount = 0
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
@@ -15,7 +17,7 @@ function DepositInAnyWarehouse(sourceStorage, sourceSlot)
     return movedItemCount
 end
 
-function GetFromAnyWarehouse(itemName, destination, itemCount, guess)
+function warehouse_interface.GetFromAnyWarehouse(itemName, destination, itemCount, guess)
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
@@ -50,3 +52,6 @@ function GetFromAnyWarehouse(itemName, destination, itemCount, guess)
     end
     return foundCount
 end
+
+
+return warehouse_interface
