@@ -41,7 +41,7 @@ function Main()
             for slot, item in pairs(container.list()) do
                 if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
                     print('Warehousing:', item.name)
-                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, 3)
+                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
                 end
             end
         end
