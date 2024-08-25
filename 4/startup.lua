@@ -1,4 +1,6 @@
 
+shell.openTab("data_output")
+
 json = require "json"
 
 ----------------------------------
