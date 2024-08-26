@@ -1,1 +1,1 @@
-{"top":[],"back":{"getBuildings":9,"getHappiness":4.7787179487179,"getRequests":0,"isUnderAttack":false,"name":"Nolins","getWorkOrders":4,"getVisitors":3,"maxOfCitizens":6,"isUnderRaid":false,"amountOfCitizens":6},"timeStamp":1724624041019}
+{"top":[],"colonyIntegrator":{"name":"Nolins","getHungryCitizens":0,"getSleepingCitizens":0},"back":{"getBuildings":12,"getHappiness":4.448026180169,"getRequests":5,"isUnderAttack":false,"name":"Nolins","getWorkOrders":4,"getVisitors":3,"maxOfCitizens":7,"isUnderRaid":false,"amountOfCitizens":7},"timeStamp":1724701365197}

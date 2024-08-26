@@ -17,11 +17,10 @@ local processed = {
 
 function Main()
     local peripherals = peripheral.getNames()
-    local honey_storage = 'fluidTank_0'
+    local honey_storage = 'fluidTank_1'
     local furnaces_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}
-    local honey_bottler = 'create:depot_0'
 
     local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
@@ -215,8 +214,8 @@ print('Starting HIVE MANAGER...')
 
 while true do
     if redstone.getInput('top') then
-        -- pcall(Main)
-        Main()
+        pcall(Main)
+        -- Main()
     else
         print('Service Offline - Flip the lever on top!')
     end

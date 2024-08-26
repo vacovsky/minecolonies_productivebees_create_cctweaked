@@ -1,0 +1,452 @@
+[
+    {
+        "bedPos": {
+            "y": 75,
+            "x": -7248,
+            "z": -6115
+        },
+        "betterFood": false,
+        "isIdle": false,
+        "happiness": 2.7272727272727,
+        "saturation": 19.89,
+        "armor": 0,
+        "toughness": 0,
+        "children": [],
+        "isAsleep": true,
+        "gender": "female",
+        "age": "child",
+        "state": "Sleeping zZZ",
+        "id": 1,
+        "health": 20,
+        "name": "Amani A. Halley",
+        "location": {
+            "y": 75,
+            "x": -7248,
+            "z": -6115
+        },
+        "skills": {
+            "Athletics": {
+                "xp": 0,
+                "level": 6
+            },
+            "Creativity": {
+                "xp": 0,
+                "level": 5
+            },
+            "Mana": {
+                "xp": 0,
+                "level": 4
+            },
+            "Intelligence": {
+                "xp": 0,
+                "level": 3
+            },
+            "Knowledge": {
+                "xp": 0,
+                "level": 4
+            },
+            "Dexterity": {
+                "xp": 0,
+                "level": 3
+            },
+            "Agility": {
+                "xp": 0,
+                "level": 7
+            },
+            "Adaptability": {
+                "xp": 0,
+                "level": 11
+            },
+            "Focus": {
+                "xp": 0,
+                "level": 2
+            },
+            "Stamina": {
+                "xp": 0,
+                "level": 4
+            },
+            "Strength": {
+                "xp": 0,
+                "level": 3
+            }
+        },
+        "maxHealth": 20,
+        "home": {
+            "location": {
+                "y": 75,
+                "x": -7252,
+                "z": -6113
+            },
+            "level": 2,
+            "type": "residence"
+        }
+    },
+    {
+        "bedPos": {
+            "y": 75,
+            "x": -7273,
+            "z": -6119
+        },
+        "betterFood": false,
+        "isIdle": false,
+        "happiness": 2.6923076923077,
+        "home": {
+            "location": {
+                "y": 75,
+                "x": -7274,
+                "z": -6121
+            },
+            "level": 1,
+            "type": "tavern"
+        },
+        "armor": 0,
+        "toughness": 0,
+        "children": [
+            1,
+            6
+        ],
+        "isAsleep": true,
+        "gender": "male",
+        "age": "adult",
+        "id": 3,
+        "state": "Sleeping zZZ",
+        "name": "Emiliano S. Halley",
+        "health": 20,
+        "saturation": 19.258,
+        "work": {
+            "type": "deliveryman",
+            "name": "com.minecolonies.building.deliveryman",
+            "location": {
+                "y": 75,
+                "x": -7292,
+                "z": -6110
+            },
+            "level": 2,
+            "job": "com.minecolonies.job.deliveryman"
+        },
+        "skills": {
+            "Athletics": {
+                "xp": 0,
+                "level": 1
+            },
+            "Creativity": {
+                "xp": 0.053535500000001,
+                "level": 2
+            },
+            "Mana": {
+                "xp": 0,
+                "level": 1
+            },
+            "Intelligence": {
+                "xp": 0,
+                "level": 1
+            },
+            "Knowledge": {
+                "xp": 0,
+                "level": 1
+            },
+            "Dexterity": {
+                "xp": 6.112071,
+                "level": 2
+            },
+            "Agility": {
+                "xp": 7.9657099999999,
+                "level": 7
+            },
+            "Adaptability": {
+                "xp": 6.085355,
+                "level": 5
+            },
+            "Focus": {
+                "xp": 0,
+                "level": 1
+            },
+            "Stamina": {
+                "xp": 0,
+                "level": 1
+            },
+            "Strength": {
+                "xp": 0,
+                "level": 1
+            }
+        },
+        "maxHealth": 20,
+        "location": {
+            "y": 75,
+            "x": -7273,
+            "z": -6119
+        }
+    },
+    {
+        "bedPos": {
+            "y": 75,
+            "x": -7279,
+            "z": -6119
+        },
+        "betterFood": false,
+        "isIdle": false,
+        "happiness": 1.8181818181818,
+        "saturation": 18.9,
+        "armor": 0,
+        "toughness": 0,
+        "children": [],
+        "isAsleep": true,
+        "gender": "female",
+        "age": "child",
+        "state": "Sleeping zZZ",
+        "id": 4,
+        "health": 20,
+        "name": "Khloe C. Halley",
+        "location": {
+            "y": 75,
+            "x": -7279,
+            "z": -6119
+        },
+        "skills": {
+            "Athletics": {
+                "xp": 0,
+                "level": 5
+            },
+            "Creativity": {
+                "xp": 0,
+                "level": 5
+            },
+            "Mana": {
+                "xp": 0,
+                "level": 4
+            },
+            "Intelligence": {
+                "xp": 0,
+                "level": 4
+            },
+            "Knowledge": {
+                "xp": 0,
+                "level": 3
+            },
+            "Dexterity": {
+                "xp": 0,
+                "level": 3
+            },
+            "Agility": {
+                "xp": 0,
+                "level": 5
+            },
+            "Adaptability": {
+                "xp": 0,
+                "level": 10
+            },
+            "Focus": {
+                "xp": 0,
+                "level": 4
+            },
+            "Stamina": {
+                "xp": 0,
+                "level": 4
+            },
+            "Strength": {
+                "xp": 0,
+                "level": 2
+            }
+        },
+        "maxHealth": 20,
+        "home": {
+            "location": {
+                "y": 75,
+                "x": -7274,
+                "z": -6121
+            },
+            "level": 1,
+            "type": "tavern"
+        }
+    },
+    {
+        "bedPos": {
+            "y": 75,
+            "x": -7273,
+            "z": -6125
+        },
+        "betterFood": false,
+        "isIdle": false,
+        "happiness": 3.0769230769231,
+        "home": {
+            "location": {
+                "y": 75,
+                "x": -7274,
+                "z": -6121
+            },
+            "level": 1,
+            "type": "tavern"
+        },
+        "armor": 0,
+        "toughness": 0,
+        "children": [
+            4
+        ],
+        "isAsleep": true,
+        "gender": "female",
+        "age": "adult",
+        "id": 6,
+        "state": "Sleeping zZZ",
+        "name": "Adelaide C. Halley",
+        "health": 20,
+        "saturation": 19.7188,
+        "work": {
+            "type": "deliveryman",
+            "name": "com.minecolonies.building.deliveryman",
+            "location": {
+                "y": 75,
+                "x": -7291,
+                "z": -6095
+            },
+            "level": 1,
+            "job": "com.minecolonies.job.deliveryman"
+        },
+        "skills": {
+            "Athletics": {
+                "xp": 0,
+                "level": 3
+            },
+            "Creativity": {
+                "xp": 0.37389,
+                "level": 3
+            },
+            "Mana": {
+                "xp": 0,
+                "level": 4
+            },
+            "Intelligence": {
+                "xp": 0,
+                "level": 3
+            },
+            "Knowledge": {
+                "xp": 0,
+                "level": 3
+            },
+            "Dexterity": {
+                "xp": 0.74778,
+                "level": 5
+            },
+            "Agility": {
+                "xp": 7.4778,
+                "level": 9
+            },
+            "Adaptability": {
+                "xp": 3.7389,
+                "level": 9
+            },
+            "Focus": {
+                "xp": 20.94611,
+                "level": 4
+            },
+            "Stamina": {
+                "xp": 0,
+                "level": 3
+            },
+            "Strength": {
+                "xp": 5.25722,
+                "level": 1
+            }
+        },
+        "maxHealth": 20,
+        "location": {
+            "y": 75,
+            "x": -7273,
+            "z": -6125
+        }
+    },
+    {
+        "bedPos": {
+            "y": 75,
+            "x": -7248,
+            "z": -6113
+        },
+        "betterFood": false,
+        "isIdle": false,
+        "happiness": 3.8461538461538,
+        "home": {
+            "location": {
+                "y": 75,
+                "x": -7252,
+                "z": -6113
+            },
+            "level": 2,
+            "type": "residence"
+        },
+        "armor": 0,
+        "toughness": 0,
+        "children": [
+            1
+        ],
+        "isAsleep": true,
+        "gender": "female",
+        "age": "adult",
+        "id": 7,
+        "state": "Sleeping zZZ",
+        "name": "Estelle G. Addicock",
+        "health": 20,
+        "saturation": 19.3984,
+        "work": {
+            "type": "builder",
+            "name": "com.minecolonies.building.builder",
+            "location": {
+                "y": 75,
+                "x": -7260,
+                "z": -6139
+            },
+            "level": 3,
+            "job": "com.minecolonies.job.builder"
+        },
+        "skills": {
+            "Athletics": {
+                "xp": 5.562,
+                "level": 7
+            },
+            "Creativity": {
+                "xp": 1.1124,
+                "level": 5
+            },
+            "Mana": {
+                "xp": 0,
+                "level": 4
+            },
+            "Intelligence": {
+                "xp": 0,
+                "level": 3
+            },
+            "Knowledge": {
+                "xp": 0,
+                "level": 4
+            },
+            "Dexterity": {
+                "xp": 10.4838,
+                "level": 2
+            },
+            "Agility": {
+                "xp": 0,
+                "level": 3
+            },
+            "Adaptability": {
+                "xp": 11.124,
+                "level": 10
+            },
+            "Focus": {
+                "xp": 4.8926,
+                "level": 1
+            },
+            "Stamina": {
+                "xp": 0,
+                "level": 4
+            },
+            "Strength": {
+                "xp": 0.5562,
+                "level": 3
+            }
+        },
+        "maxHealth": 20,
+        "location": {
+            "y": 75,
+            "x": -7248,
+            "z": -6113
+        }
+    }
+]

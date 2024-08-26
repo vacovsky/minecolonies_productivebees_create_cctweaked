@@ -52,7 +52,9 @@ function GetStatusOfAttachedDevices()
                   count = count +1
                end
                result = count
-            end 
+            end
+
+
 
 
             MM[deviceName][method] = result
@@ -61,8 +63,43 @@ function GetStatusOfAttachedDevices()
          end
       end
    end
+
+   MM['colonyIntegrator'] = {
+
+   }
+   MM['colonyIntegrator']["name"] = "Nolins"
+
+   MM['colonyIntegrator']['getHungryCitizens'] = getHungryCitizenCount()
+   MM['colonyIntegrator']['getSleepingCitizens'] = getSleepingCitizenCount()
+   -- MM['colonyIntegrator']['getHungryCitizens'] = getHungryCitizenCount()
    return MM
 end
+
+function getSickCitizenCount()
+   local ci = peripheral.find('colonyIntegrator')
+   -- WriteToFile(json.encode(ci.getCitizens()), 'cits.json', 'w')
+end
+
+
+function getSleepingCitizenCount()
+   local counter = 0
+   local ci = peripheral.find('colonyIntegrator')
+   for _, cit in pairs(ci.getCitizens()) do
+      if cit.isAsleep then counter = counter+1 end
+   end
+   return counter
+end
+
+function getHungryCitizenCount()
+   local counter = 0
+   local ci = peripheral.find('colonyIntegrator')
+   for _, cit in pairs(ci.getCitizens()) do
+      if cit.betterFood then counter = counter+1 end
+   end
+   return counter
+end
+
+
 
 function WriteToFile(input, fileName, mode)
    local file = io.open(fileName, mode)
