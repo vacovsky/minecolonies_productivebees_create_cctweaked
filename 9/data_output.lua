@@ -88,6 +88,28 @@ function getSickCitizenCount()
 end
 
 
+function GetUnstaffedBuldingTypes()
+   local buildingTypes = {}
+   local count = 0
+   for k, b in pairs(buildings) do
+       if b.type ~= "residence"
+       and b.type ~= "mysticalsite"
+       and b.type ~= "barracks"
+       and b.type ~= "townhall" then
+           if b.level > 0 and #b.citizens == 0 then
+               count =  count + 1
+               if buildingTypes[b.type] ~= nil then
+                   -- print(b.type, buildingTypes[b.type])
+                   buildingTypes[b.type] = buildingTypes[b.type] + 1
+               else
+                   buildingTypes[b.type] = 1
+               end
+           end
+       end 
+   end
+   return buildingTypes, count
+end
+
 function getSleepingCitizenCount()
    local counter = 0
    local ci = peripheral.find('colonyIntegrator')
