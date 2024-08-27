@@ -1,6 +1,8 @@
+json = require "json"
 local whi = require 'warehouse_interface'
 local warehouses = 'minecolonies:warehouse'
 local TRASHCAN = 'ironchests:diamond_chest_0'
+COLONY_NAME = 'Nolins'
 
 local MIN_KEEP_COUNT = 1024
 
@@ -10,6 +12,7 @@ local BLACKLIST = {
 }
 
 function PruneWarehouse()
+    local burnedCount = 0
     local itemCountMap = {}
 
     -- COLLECT WAREHOUSE NAMES
@@ -35,14 +38,34 @@ function PruneWarehouse()
     ::loopback::
     for name, count in pairs(itemCountMap) do
         if count > MIN_KEEP_COUNT then
-            print('Burned', whi.GetFromAnyWarehouse(false, name, TRASHCAN, 64), name)
-            itemCountMap[name] = itemCountMap[name] - 64
+            local this = whi.GetFromAnyWarehouse(false, name, TRASHCAN, 64)
+            itemCountMap[name] = itemCountMap[name] - this
+            burnedCount = burnedCount + this
+            print('Burned', this, name)
             goto loopback
         end
     end
+    local data = {
+        timeStamp = os.epoch("utc"),
+        incinerator = {
+            name = COLONY_NAME,
+            incineratedCount = burnedCount
+        }
+    }
+    WriteToFile(json.encode(data), "monitorData.json", "w")
+end
+
+
+function WriteToFile(input, fileName, mode)
+    local file = io.open(fileName, mode)
+    io.output(file)
+    io.write(input)
+    io.close(file)
 end
 
 while true do
+    print('Starting warehouse prune...')
     PruneWarehouse()
+    -- pcall(PruneWarehouse)
     sleep(600)
 end

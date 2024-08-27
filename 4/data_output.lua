@@ -71,13 +71,20 @@ function GetStatusOfAttachedDevices()
 
    MM['colonyIntegrator']['getHungryCitizens'] = getHungryCitizenCount()
    MM['colonyIntegrator']['getSleepingCitizens'] = getSleepingCitizenCount()
+   MM['colonyIntegrator']['getSickCitizens'] = getSickCitizenCount()
    -- MM['colonyIntegrator']['getHungryCitizens'] = getHungryCitizenCount()
    return MM
 end
 
 function getSickCitizenCount()
    local ci = peripheral.find('colonyIntegrator')
-   -- WriteToFile(json.encode(ci.getCitizens()), 'cits.json', 'w')
+   WriteToFile(json.encode(ci.getCitizens()), 'cits.json', 'w')
+   local counter = 0
+   local ci = peripheral.find('colonyIntegrator')
+   for _, cit in pairs(ci.getCitizens()) do
+      if cit.state == 'Sick' then counter = counter+1 end
+   end
+   return counter
 end
 
 

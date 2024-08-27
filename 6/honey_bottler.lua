@@ -1,8 +1,8 @@
 local WAIT_SECONDS = 30
 local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
 local warehouses = "minecolonies:warehouse"
-local honey_storage = 'fluidTank_0'
-local honey_bottler = 'create:depot_0'
+local honey_storage = 'fluidTank_1'
+local honey_bottler = 'create:depot_1'
 
 
 -- function FindAllWarehouses()

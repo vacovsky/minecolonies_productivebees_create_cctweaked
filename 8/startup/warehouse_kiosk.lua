@@ -1,6 +1,7 @@
 shell.openTab("warehouse_returns")
 shell.openTab("warehouse_pruner")
 -- shell.openTab("incinerator")
+local LAST_SELECTION = ''
 
 local WAREHOUSE = 'minecolonies:warehouse'
 local MAX_ITEM_COUNT = 64
@@ -30,6 +31,7 @@ function DeliverItem(itemName, itemCount)
     end
 
     -- MOVE THE ITEMS
+    LAST_SELECTION = deliveredItemName
     deliveredItemName = ''
     for whi, warehouseName in pairs(warehouses) do
         warehouse = peripheral.wrap(warehouseName)
@@ -50,16 +52,31 @@ function DeliverItem(itemName, itemCount)
     return true
 end
 
+-- print('Type an item name and count - if we have any, items will be delivered instantly to the attached chest.\n\nUse format: <itemname> <count>\nexample:  iron_ingot 32')
+-- while true do
+--     write("\n\nWARES_UI> ")
+--     local msg = read()
+--     if msg == nil then goto continue end
+
+--     words = {}
+--     for word in msg:gmatch("%S+") do
+--         pcall(table.insert, words, word)
+--     end
+--     pcall(DeliverItem(words[1], tonumber(words[2])))
+--     ::continue::
+-- end
+
 print('Type an item name and count - if we have any, items will be delivered instantly to the attached chest.\n\nUse format: <itemname> <count>\nexample:  iron_ingot 32')
 while true do
     write("\n\nWARES_UI> ")
     local msg = read()
     if msg == nil then goto continue end
-
-    words = {}
+    -- if msg == nil or msg == '' then msg = LAST_SELECTION + '64' end
+    local words = {}
     for word in msg:gmatch("%S+") do
         pcall(table.insert, words, word)
     end
+    -- LAST_SELECTION = words[1]
     pcall(DeliverItem(words[1], tonumber(words[2])))
     ::continue::
 end

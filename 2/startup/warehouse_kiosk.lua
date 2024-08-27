@@ -6,8 +6,10 @@ local WAREHOUSE = 'minecolonies:warehouse'
 local MAX_ITEM_COUNT = 64
 local DESTINATION_STORAGE = 'ironchests:obsidian_chest_0'
 local ITEM_NAME_MIN = 4
+local LAST_SELECTION = ''
 
 function DeliverItem(itemName, itemCount)
+    LAST_SELECTION = itemName
     if itemName == nil then return true end
     -- ENFORCE MINIMUM ITEM NAME
     if string.len(itemName) < 4 then print('Supplied item name must be at least', ITEM_NAME_MIN, 'letters.') return true end
@@ -17,11 +19,11 @@ function DeliverItem(itemName, itemCount)
     if itemCount > MAX_ITEM_COUNT then print('Max item count allowed is', MAX_ITEM_COUNT)
         itemCount = MAX_ITEM_COUNT
     end
-    foundCount = 0
+    local foundCount = 0
 
     -- FIND WAREHOUSES
-    warehouses = {}
-    peripherals = peripheral.getNames()
+    local warehouses = {}
+    local peripherals = peripheral.getNames()
     for pni, perName in pairs(peripherals) do
         if string.find(perName, WAREHOUSE) then
             print('Checking location:', perName)
@@ -30,9 +32,9 @@ function DeliverItem(itemName, itemCount)
     end
 
     -- MOVE THE ITEMS
-    deliveredItemName = ''
+    local deliveredItemName = ''
     for whi, warehouseName in pairs(warehouses) do
-        warehouse = peripheral.wrap(warehouseName)
+        local warehouse = peripheral.wrap(warehouseName)
         foundCount = 0
         for slot, item in pairs(warehouse.list()) do
             if string.find(item.name, itemName) then
@@ -54,12 +56,13 @@ print('Type an item name and count - if we have any, items will be delivered ins
 while true do
     write("\n\nWARES_UI> ")
     local msg = read()
-    if msg == nil then goto continue end
-
-    words = {}
+    -- if msg == nil then goto continue end
+    if msg == nil then msg = LAST_SELECTION end
+    local words = {}
     for word in msg:gmatch("%S+") do
         pcall(table.insert, words, word)
     end
+    LAST_SELECTION = words[1]
     pcall(DeliverItem(words[1], tonumber(words[2])))
-    ::continue::
+    -- ::continue::
 end
