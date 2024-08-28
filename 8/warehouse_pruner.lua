@@ -65,7 +65,7 @@ end
 
 while true do
     print('Starting warehouse prune...')
-    PruneWarehouse()
-    -- pcall(PruneWarehouse)
+    -- PruneWarehouse()
+    pcall(PruneWarehouse)
     sleep(600)
 end

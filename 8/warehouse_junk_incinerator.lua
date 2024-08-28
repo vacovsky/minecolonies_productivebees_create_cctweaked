@@ -6,14 +6,8 @@ JUNKLIST_CHEST = ''
 local JUNK = {
     'productivebees:wax',
     'minecraft:snowball',
-    -- 'minecraft:carrot',
-    -- 'minecraft:potato',
-    -- 'minecraft:cobbled_deepslate',
-    -- 'minecraft:nether_quartz',
-    -- 'farm_and_charm:corn',
-
+    'gravestone:obituary',
     'farm_and_charm:kernels',
-
 }
 
 local TRASHCAN = 'ironchests:obsidian_barrel_1'
@@ -28,7 +22,7 @@ function IncinerateJunk()
     local data = {
         incinerator = {
             name = COLONY_NAME,
-            incineratedCount = count
+            incineratedJunkCount = count
         }
     }
     WriteToFile(json.encode(data), "monitorData.json", "w")
@@ -45,7 +39,7 @@ print('Starting junk incinerator...')
 while true do
     -- pcall(IncinerateJunk)
     pcall(IncinerateJunk)
-    sleep(120)
+    sleep(600)
 
 
     -- TODO

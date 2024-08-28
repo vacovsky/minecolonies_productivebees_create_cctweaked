@@ -50,28 +50,6 @@ function colonylib.GetHungryCitizenCount()
     return counter
 end
 
-function colonylib.GetUnstaffedBuldingTypes()
-    local buildingTypes = {}
-    local count = 0
-    for k, b in pairs(buildings) do
-        if b.type ~= "residence"
-            and b.type ~= "mysticalsite"
-            and b.type ~= "barracks"
-            and b.type ~= "townhall" then
-            if b.level > 0 and #b.citizens == 0 then
-                count = count + 1
-                if buildingTypes[b.type] ~= nil then
-                    -- print(b.type, buildingTypes[b.type])
-                    buildingTypes[b.type] = buildingTypes[b.type] + 1
-                else
-                    buildingTypes[b.type] = 1
-                end
-            end
-        end
-    end
-    return buildingTypes, count
-end
-
 function colonylib.WriteToFile(input, fileName, mode)
     local file = io.open(fileName, mode)
     io.output(file)
@@ -136,7 +114,10 @@ function colonylib.GetStatusOfAttachedDevices()
     MM['colonyIntegrator']['getHungryCitizens'] = colonylib.GetHungryCitizenCount()
     MM['colonyIntegrator']['getSleepingCitizens'] = colonylib.GetSleepingCitizenCount()
     MM['colonyIntegrator']['getSickCitizens'] = colonylib.GetSickCitizenCount()
-    MM['colonyIntegrator']['getWarehouseUsedPercent'] = colonylib.GetWarehouse()
+
+    MM['colonyIntegrator']['getWarehouseUsedPercent'] = colonylib.GetWarehouse().percentUsed
+    _, MM['colonyIntegrator']['unstaffedBuldingCount'] = colonylib.GetUnstaffedBuldingTypes()
+    MM['colonyIntegrator']['activeResearchCount'] = colonylib.GetActiveResearchCount()
     return MM
 end
 
@@ -173,20 +154,12 @@ function colonylib.GetUnemployedCitizens()
 end
 
 function colonylib.GetActiveResearchCount()
+    local research = peripheral.find('colonyIntegrator').getResearch()
     local count = 0
     for k, v in pairs(research) do
         if not v.built then count = count + 1 end
     end
     return count
-end
-
--------------- BUILDINGS --------------
-function colonylib.GetUnstaffedBuldingCount()
-    local buildings = peripheral.find('colonyIntegrator').getBuildings()
-    local count = 0
-    for k, b in pairs(buildings) do
-        if b.maxLevel > 0 and #b.citizens == 0 then count = count + 1 end
-    end
 end
 
 function colonylib.GetAverageBuildingLevel() -- actual, possible
@@ -215,6 +188,7 @@ function colonylib.GetUnstaffedBuldingTypes()
         if b.type ~= "residence"
             and b.type ~= "mysticalsite"
             and b.type ~= "barracks"
+            and b.type ~= "warehouse"
             and b.type ~= "townhall" then
             if b.level > 0 and #b.citizens == 0 then
                 count = count + 1
