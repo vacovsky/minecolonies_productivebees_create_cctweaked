@@ -1,3 +1,5 @@
+local json = require "json"
+
 local whi = require 'warehouse_interface'
 COLONY_NAME = 'Nolins'
 JUNKLIST_CHEST = ''
@@ -10,7 +12,7 @@ local JUNK = {
     'farm_and_charm:kernels',
 }
 
-local TRASHCAN = 'ironchests:obsidian_barrel_1'
+local TRASHCAN = 'ironchests:diamond_chest_0'
 
 function IncinerateJunk()
     local count = 0
@@ -20,12 +22,13 @@ function IncinerateJunk()
         print('Burned', this, item)
     end
     local data = {
-        incinerator = {
+        timeStamp = os.epoch("utc"),
+        junkincinerator = {
             name = COLONY_NAME,
             incineratedJunkCount = count
         }
     }
-    WriteToFile(json.encode(data), "monitorData.json", "w")
+    WriteToFile(json.encode(data), "incineratorData.json", "w")
 end
 
 function WriteToFile(input, fileName, mode)
@@ -37,8 +40,8 @@ end
 
 print('Starting junk incinerator...')
 while true do
+    IncinerateJunk()
     -- pcall(IncinerateJunk)
-    pcall(IncinerateJunk)
     sleep(600)
 
 

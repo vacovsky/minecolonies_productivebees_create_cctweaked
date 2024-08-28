@@ -1,4 +1,4 @@
-json = require "json"
+local json = require "json"
 local whi = require 'warehouse_interface'
 local warehouses = 'minecolonies:warehouse'
 local TRASHCAN = 'ironchests:diamond_chest_0'
@@ -52,7 +52,7 @@ function PruneWarehouse()
             incineratedCount = burnedCount
         }
     }
-    WriteToFile(json.encode(data), "monitorData.json", "w")
+    WriteToFile(json.encode(data), "prunerData.json", "w")
 end
 
 

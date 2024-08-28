@@ -1,6 +1,7 @@
 shell.openTab("warehouse_returns")
 shell.openTab("warehouse_pruner")
--- shell.openTab("incinerator")
+shell.openTab("warehouse_junk_incinerator")
+
 local LAST_SELECTION = ''
 
 local WAREHOUSE = 'minecolonies:warehouse'

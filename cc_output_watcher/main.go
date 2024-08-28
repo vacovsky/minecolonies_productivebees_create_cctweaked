@@ -10,7 +10,8 @@ var WATCHED_FILES = []string{
 	// Nolins
 	`D:\FarmColonies\world\computercraft\computer\4\monitorData.json`,
 	`D:\FarmColonies\world\computercraft\computer\6\monitorData.json`,
-	`D:\FarmColonies\world\computercraft\computer\8\monitorData.json`,
+	`D:\FarmColonies\world\computercraft\computer\8\prunerData.json`,
+	`D:\FarmColonies\world\computercraft\computer\8\incineratorData.json`,
 
 	// Sea Shanty
 	// `D:\FarmColonies\world\computercraft\computer\4\monitorData.json`,
