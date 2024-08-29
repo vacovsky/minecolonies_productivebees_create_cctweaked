@@ -1,3 +1,4 @@
+---@diagnostic disable: need-check-nil
 ----------------------------------
 local colonylib = require "lib/colony_interface"
 

@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 local WAIT_SECONDS = 180
 local REBOOT_AFTER_LOOPS = 6 -- REBOOT AFTER THIS MANY LOOPS
 local SMELT_FLESH = false
@@ -61,7 +62,7 @@ function Main()
         -- TRANSFER COMBS TO FUGES
         for i, attached_peripheral in pairs(peripherals) do
             if string.find(attached_peripheral, hives) then
-                hive = peripheral.wrap(attached_peripheral)
+                local hive = peripheral.wrap(attached_peripheral)
 
                 for slot, item in pairs(hive.list()) do
                     if string.find(item.name, 'productivebees:') then

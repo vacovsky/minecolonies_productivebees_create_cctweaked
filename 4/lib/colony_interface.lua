@@ -23,7 +23,7 @@ end
 
 function colonylib.GetSickCitizenCount()
     local ci = peripheral.find('colonyIntegrator')
-    colonylib.WriteToFile(json.encode(ci.getCitizens()), 'cits.json', 'w')
+    -- colonylib.WriteToFile(json.encode(ci.getCitizens()), 'cits.json', 'w')
     local counter = 0
     local ci = peripheral.find('colonyIntegrator')
     for _, cit in pairs(ci.getCitizens()) do
