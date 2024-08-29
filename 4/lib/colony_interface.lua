@@ -118,6 +118,10 @@ function colonylib.GetStatusOfAttachedDevices()
     MM['colonyIntegrator']['getWarehouseUsedPercent'] = colonylib.GetWarehouse().percentUsed
     _, MM['colonyIntegrator']['unstaffedBuldingCount'] = colonylib.GetUnstaffedBuldingTypes()
     MM['colonyIntegrator']['activeResearchCount'] = colonylib.GetActiveResearchCount()
+    MM['colonyIntegrator']['finishedResearchCount'] = colonylib.GetCompletedResearchCount()
+    MM['colonyIntegrator']['unguardedBuildingCount'] = colonylib.GetUnguardedBuildingsCount()
+    MM['colonyIntegrator']['getAverageBuildingLevel'] = tonumber(colonylib.GetAverageBuildingLevel().avg)
+
     return MM
 end
 
@@ -157,8 +161,21 @@ function colonylib.GetActiveResearchCount()
     local research = peripheral.find('colonyIntegrator').getResearch()
     local count = 0
     for k, v in pairs(research) do
-        if not v.built then count = count + 1 end
+        if v.status == "IN_PROGRESS" then count = count + 1 end
     end
+    -- colonylib.WriteToFile(json.encode(research), "research.json", "w")
+
+    return count
+end
+
+function colonylib.GetCompletedResearchCount()
+    local research = peripheral.find('colonyIntegrator').getResearch()
+    local count = 0
+    for k, v in pairs(research) do
+        if v.status == "FINISHED" then count = count + 1 end
+    end
+    -- colonylib.WriteToFile(json.encode(research), "research.json", "w")
+
     return count
 end
 
@@ -212,6 +229,16 @@ function colonylib.GetGuardedBuildingsCount()
     end
     return count
 end
+
+function colonylib.GetUnguardedBuildingsCount()
+    local buildings = peripheral.find('colonyIntegrator').getBuildings()
+    local count = 0
+    for k, v in pairs(buildings) do
+        if v.guarded then count = count + 1 end
+    end
+    return #buildings - count
+end
+
 
 function colonylib.GetResearchedCount()
     local research = peripheral.find('colonyIntegrator').getResearch()

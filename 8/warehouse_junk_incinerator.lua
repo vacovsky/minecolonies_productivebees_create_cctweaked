@@ -21,6 +21,7 @@ function IncinerateJunk()
         count = count + this
         print('Burned', this, item)
     end
+
     local data = {
         timeStamp = os.epoch("utc"),
         junkincinerator = {
@@ -40,8 +41,8 @@ end
 
 print('Starting junk incinerator...')
 while true do
-    IncinerateJunk()
-    -- pcall(IncinerateJunk)
+    -- IncinerateJunk()
+    pcall(IncinerateJunk)
     sleep(600)
 
 

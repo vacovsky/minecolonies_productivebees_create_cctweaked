@@ -2,7 +2,7 @@ json = require "json"
 
 local WAIT_SECONDS = 120
 local REBOOT_AFTER_LOOPS = 30 -- REBOOT AFTER THIS MANY LOOPS
-local SMELT_FLESH = false
+local SMELT_FLESH = true
 
 local hives = 'productivebees:advanced_'
 local fuges = 'productivebees:centrifuge'
