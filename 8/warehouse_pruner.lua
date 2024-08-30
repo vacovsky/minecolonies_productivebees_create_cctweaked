@@ -5,6 +5,7 @@ local TRASHCAN = 'ironchests:diamond_chest_0'
 COLONY_NAME = 'Nolins'
 
 local MIN_KEEP_COUNT = 1024
+local MAX_SLOTS_COUNT = 16
 
 -- ITEMS TO KEEP REGARDLESS OF VOLUME
 local BLACKLIST = {
@@ -28,20 +29,27 @@ function PruneWarehouse()
         local whp = peripheral.wrap(warehouse)
         for _, item in pairs(whp.list()) do
             if itemCountMap[item.name] then
-                itemCountMap[item.name] = itemCountMap[item.name] + item.count
+                itemCountMap[item.name] = {
+                    count = itemCountMap[item.name].count + item.count,
+                    slots = itemCountMap[item.name].slots + 1
+                }
             else
-                itemCountMap[item.name] = item.count
+                itemCountMap[item.name] = {
+                    count = item.count,
+                    slots = 1
+                }
             end
         end
     end
 
     ::loopback::
-    for name, count in pairs(itemCountMap) do
-        if count > MIN_KEEP_COUNT then
+    for name, data in pairs(itemCountMap) do
+        if data.count > MIN_KEEP_COUNT or data.slots > MAX_SLOTS_COUNT then            
             local this = whi.GetFromAnyWarehouse(false, name, TRASHCAN, 64)
-            itemCountMap[name] = itemCountMap[name] - this
+            itemCountMap[name] = itemCountMap[name].count - this
             burnedCount = burnedCount + this
-            print('Burned', this, name)
+            print('Burned', this, ':', data.slots, name, burnedCount)
+
             goto loopback
         end
     end
@@ -52,9 +60,8 @@ function PruneWarehouse()
             incineratedCount = burnedCount
         }
     }
-    WriteToFile(json.encode(data), "prunerData.json", "w")
+    -- WriteToFile(json.encode(data), "prunerData.json", "w")
 end
-
 
 function WriteToFile(input, fileName, mode)
     local file = io.open(fileName, mode)
