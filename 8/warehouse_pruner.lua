@@ -5,7 +5,7 @@ local TRASHCAN = 'ironchests:diamond_chest_0'
 COLONY_NAME = 'Nolins'
 
 local MIN_KEEP_COUNT = 1024
-local MAX_SLOTS_COUNT = 16
+local MAX_SLOTS_COUNT = 32
 
 -- ITEMS TO KEEP REGARDLESS OF VOLUME
 local BLACKLIST = {
@@ -35,7 +35,7 @@ function PruneWarehouse()
                 }
             else
                 itemCountMap[item.name] = {
-                    count = item.count,
+                    count = 0 + item.count,
                     slots = 1
                 }
             end
@@ -43,14 +43,16 @@ function PruneWarehouse()
     end
 
     ::loopback::
-    for name, data in pairs(itemCountMap) do
-        if data.count > MIN_KEEP_COUNT or data.slots > MAX_SLOTS_COUNT then            
-            local this = whi.GetFromAnyWarehouse(false, name, TRASHCAN, 64)
-            itemCountMap[name] = itemCountMap[name].count - this
-            burnedCount = burnedCount + this
-            print('Burned', this, ':', data.slots, name, burnedCount)
-
-            goto loopback
+    for name, tab in pairs(itemCountMap) do
+        if type(tab) == 'table' then
+            if tab.count > MIN_KEEP_COUNT
+                or (tab.count > MIN_KEEP_COUNT / 2 and tab.slots > MAX_SLOTS_COUNT) then
+                local this = whi.GetFromAnyWarehouse(false, name, TRASHCAN, 64)
+                itemCountMap[name] = itemCountMap[name].count - this
+                burnedCount = burnedCount + this
+                print('Burned', this, ':', tab.slots, name, burnedCount)
+                goto loopback
+            end
         end
     end
     local data = {
@@ -60,7 +62,7 @@ function PruneWarehouse()
             incineratedCount = burnedCount
         }
     }
-    -- WriteToFile(json.encode(data), "prunerData.json", "w")
+    WriteToFile(json.encode(data), "prunerData.json", "w")
 end
 
 function WriteToFile(input, fileName, mode)
@@ -72,7 +74,7 @@ end
 
 while true do
     print('Starting warehouse prune...')
-    -- PruneWarehouse()
-    pcall(PruneWarehouse)
+    PruneWarehouse()
+    -- pcall(PruneWarehouse)
     sleep(600)
 end
