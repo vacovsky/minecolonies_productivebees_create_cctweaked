@@ -2,8 +2,8 @@ local WAIT_SECONDS = 30
 local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
 local warehouses = "minecolonies:warehouse" -- This is the restaraunt block
 -- local warehouses = "minecolonies:colonyBuilding_0" -- This is the restaraunt block
-local honey_storage = 'fluidTank_1'
-local honey_bottler = 'create:depot_1'
+local honey_storage = 'fluidTank_3'
+local honey_bottler = 'create:depot_3'
 local MAXHONEYBOTTLES = 128
 
 -- function FindAllWarehouses()
@@ -96,8 +96,8 @@ local LOOPS = 0
 print('Starting HONEY BOTTLER')
 while true do
     if redstone.getInput('top') then
-        pcall(Main)
-        -- Main()
+        -- pcall(Main)
+        Main()
     else
         print('Service Offline - Flip the lever on top!')
     end

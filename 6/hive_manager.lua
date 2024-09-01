@@ -1,4 +1,4 @@
-json = require "json"
+local json = require "json"
 
 local WAIT_SECONDS = 120
 local REBOOT_AFTER_LOOPS = 30 -- REBOOT AFTER THIS MANY LOOPS
@@ -17,7 +17,7 @@ local processed = {
 
 function Main()
     local peripherals = peripheral.getNames()
-    local honey_storage = 'fluidTank_1'
+    local honey_storage = 'fluidTank_3'
     local furnaces_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}

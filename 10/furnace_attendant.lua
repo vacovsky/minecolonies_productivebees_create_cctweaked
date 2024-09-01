@@ -2,7 +2,7 @@ local whi = require 'warehouse_interface'
 
 local furnace = 'minecraft:furnace_13'
 local fuel = 'minecraft:coal'
-local raw_item = 'minecraft:sand'
+local raw_item = 'minecraft:rotten_flesh'
 
 while true do
     print(whi.GetFromAnyWarehouse(false, raw_item, furnace, 64, 1))

@@ -1,5 +1,6 @@
 shell.openTab("warehouse_returns")
 shell.openTab("warehouse_pruner")
+shell.openTab("storage_vacuum")
 -- shell.openTab("warehouse_junk_incinerator")
 
 local LAST_SELECTION = ''
