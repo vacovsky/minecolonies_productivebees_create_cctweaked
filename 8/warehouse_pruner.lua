@@ -44,6 +44,7 @@ function PruneWarehouse()
 
     ::loopback::
     for name, tab in pairs(itemCountMap) do
+        -- print(name, tab)
         if type(tab) == 'table' then
             if tab.count > MIN_KEEP_COUNT
                 or (tab.count > MIN_KEEP_COUNT / 2 and tab.slots > MAX_SLOTS_COUNT) then

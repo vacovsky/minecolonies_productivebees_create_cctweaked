@@ -10,6 +10,12 @@ local crafting_recipes = {
         {'nil', 'nil', 'nil', 'nil'},
         {'nil', 'nil', 'nil', 'nil'},
         {'nil', 'nil', 'nil', 'nil'}
+    },
+    paper_block = {
+        {'minecraft:paper', 'nil', 'minecraft:paper', 'nil'},
+        {'nil', 'minecraft:paper', 'nil', 'nil'},
+        {'minecraft:paper', 'nil', 'minecraft:paper', 'nil'},
+        {'nil', 'nil', 'nil', 'nil'}
     }
 }
 return crafting_recipes

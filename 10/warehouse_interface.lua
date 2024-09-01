@@ -26,6 +26,7 @@ function warehouse_interface.tprint(tbl, indent)
         end
     end
     toprint = toprint .. string.rep(" ", indent - 2) .. "}"
+    print(toprint)
     return toprint
 end
 
