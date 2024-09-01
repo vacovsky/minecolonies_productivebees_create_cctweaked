@@ -7,7 +7,7 @@ local COLONY_NAME = 'Nolins'
 local source_inventories = {
     'create_mechanical_extruder:mechanical_extruder_0',
     'ironchests:gold_barrel_0',
-    'ironchests:iron_barrel_0'
+    'ironchests:iron_barrel_1'
 }
 
 function WriteToFile(input, fileName, mode)
