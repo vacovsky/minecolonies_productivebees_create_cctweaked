@@ -6,7 +6,8 @@ local COLONY_NAME = 'Nolins'
 
 local source_inventories = {
     'create_mechanical_extruder:mechanical_extruder_0',
-    'ironchests:gold_barrel_0'
+    'ironchests:gold_barrel_0',
+    'ironchests:iron_barrel_0'
 }
 
 function WriteToFile(input, fileName, mode)
@@ -16,7 +17,7 @@ function WriteToFile(input, fileName, mode)
     io.close(file)
 end
 
-function Vacuum() 
+function Vacuum()
     local deposited = 0
     for _, inventory in pairs(source_inventories) do
         for _, p in pairs(peripheral.getNames()) do
@@ -43,5 +44,5 @@ end
 print('Starting warehouse vacuum...')
 while true do
     Vacuum()
-    sleep(1200)
+    sleep(600)
 end

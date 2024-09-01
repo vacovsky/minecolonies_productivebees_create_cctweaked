@@ -17,7 +17,7 @@ local processed = {
 
 function Main()
     local peripherals = peripheral.getNames()
-    local honey_storage = 'fluidTank_3'
+    local honey_storage = 'fluidTank_4'
     local furnaces_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}
@@ -90,7 +90,7 @@ function Main()
             for slot, item in pairs(container.list()) do
                 if not string.find(item.name, 'productivebees:') then
                     -- GRAB RAW ORES FOR PROCESSING
-                    if string.find(item.name, 'minecraft:raw_') or string.find(item.name, 'minecraft:ancient_debris') then
+                    if string.find(item.name, ':raw_') or string.find(item.name, 'minecraft:ancient_debris') then
                         for f, blast_furnace in pairs(blast_furnaces_list) do
                             print('Firing:', item.name, blast_furnace)
                             local dest_blast_furnace = peripheral.wrap(blast_furnace)

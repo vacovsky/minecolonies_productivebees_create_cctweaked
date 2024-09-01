@@ -1,6 +1,6 @@
 local whi = require 'warehouse_interface'
 
-local furnace = 'minecraft:furnace_13'
+local furnace = 'minecraft:furnace_18'
 local fuel = 'minecraft:coal'
 local raw_item = 'minecraft:rotten_flesh'
 

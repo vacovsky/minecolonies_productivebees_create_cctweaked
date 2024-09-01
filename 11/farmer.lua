@@ -65,7 +65,7 @@
 
 
 local STORAGE_VESSSEL = 'ironchests:gold_barrel'
-local FUEL_MIN = (turtle.getFuelLimit() / 2)
+local FUEL_MIN = (turtle.getFuelLimit() / 10)
 
 local x, y, z = 0, 0, 0
 local direction = 0
@@ -494,7 +494,7 @@ Please move the turtle to the starting position next to a modem with a chest.
 The expected setup is the turtle next to a wired modem block, with a chest next to that modem block.
 This program cannot run until placed correctly.
 ]]
-    return
+return
 else
     exchangeItems()
 end
@@ -532,7 +532,8 @@ while true do
             exchangeItems()
         end
         if turtle.getFuelLevel() < 100000 then refuel() end
+    else
+        print('Waiting on refuel\n\nNeed at least', FUEL_MIN, 'but have', turtle.getFuelLevel())
+        sleep(30)
     end
-    print('Waiting on refuel\n\nNeed at least', FUEL_MIN, 'but have', turtle.getFuelLevel())
-    sleep(30)
 end

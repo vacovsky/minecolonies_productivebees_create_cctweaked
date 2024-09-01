@@ -1,13 +1,13 @@
 shell.openTab("warehouse_returns")
 shell.openTab("warehouse_pruner")
-shell.openTab("storage_vacuum")
+shell.openTab("warehouse_vacuum")
 -- shell.openTab("warehouse_junk_incinerator")
 
 local LAST_SELECTION = ''
 
 local WAREHOUSE = 'minecolonies:warehouse'
 local MAX_ITEM_COUNT = 64
-local DESTINATION_STORAGE = 'minecraft:barrel_4'
+local DESTINATION_STORAGE = 'minecraft:barrel_7'
 local ITEM_NAME_MIN = 4
 
 function DeliverItem(itemName, itemCount)

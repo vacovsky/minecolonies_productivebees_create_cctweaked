@@ -1,4 +1,4 @@
-local DROPBOX = 'minecraft:barrel_5'
+local DROPBOX = 'minecraft:barrel_6'
 local WAREHOUSE = 'minecolonies:warehouse'
 
 function ReturnWares()
