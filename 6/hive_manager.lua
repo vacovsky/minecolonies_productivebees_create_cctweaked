@@ -17,7 +17,7 @@ local processed = {
 
 function Main()
     local peripherals = peripheral.getNames()
-    local honey_storage = 'fluidTank_4'
+    local honey_storage = 'fluidTank_5'
     local furnaces_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}

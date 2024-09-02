@@ -1,7 +1,7 @@
 local json = require "json"
 local whi = require 'warehouse_interface'
 local warehouses = 'minecolonies:warehouse'
-local TRASHCAN = 'ironchests:diamond_chest_0'
+local TRASHCAN = 'ironchests:diamond_chest_1'
 COLONY_NAME = 'Nolins'
 
 local MIN_KEEP_COUNT = 1024

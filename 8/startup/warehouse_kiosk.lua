@@ -7,7 +7,7 @@ local LAST_SELECTION = ''
 
 local WAREHOUSE = 'minecolonies:warehouse'
 local MAX_ITEM_COUNT = 64
-local DESTINATION_STORAGE = 'minecraft:barrel_7'
+local DESTINATION_STORAGE = 'minecraft:barrel_8'
 local ITEM_NAME_MIN = 4
 
 function DeliverItem(itemName, itemCount)

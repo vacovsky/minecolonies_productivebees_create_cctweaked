@@ -319,8 +319,8 @@ function Main()
     return true
 end
 
+print('Starting colony stats board...')
 while true do
-    print('Starting colony stats board...')
     Main()
     -- pcall(Main)
     sleep(REFRESH_TIME)

@@ -1,5 +1,5 @@
-local honey_storage = 'fluidTank_4'
-local honey_generator = 'productivebees:honey_generator_0'
+local honey_storage = 'fluidTank_5'
+local honey_generator = 'productivebees:honey_generator_1'
 local WAIT_SECONDS = 60
 local json = require "json"
 local COLONY_NAME = 'Nolins'
@@ -7,7 +7,8 @@ local COLONY_NAME = 'Nolins'
 
 function Main()
     local honey_source = peripheral.wrap(honey_storage)
-    local honeyUsed = honey_source.pushFluid(honey_generator)
+    local honeyUsed = 0
+     honeyUsed = honeyUsed + honey_source.pushFluid(honey_generator)
 
     local data = {
         timeStamp = os.epoch("utc"),
