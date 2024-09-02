@@ -8,7 +8,7 @@ import (
 
 var WATCHED_FILES = []string{
 	// Nolins
-	`D:\FarmColonies\world\computercraft\computer\4\monitorData.json`,
+	`D:\FarmColonies\world\computercraft\computer\14\monitorData.json`,
 	`D:\FarmColonies\world\computercraft\computer\6\monitorData.json`,
 	`D:\FarmColonies\world\computercraft\computer\8\prunerData.json`,
 	`D:\FarmColonies\world\computercraft\computer\8\incineratorData.json`,
