@@ -94,11 +94,11 @@ end
 local LOOPS = 0
 print('Starting HONEY BOTTLER')
 while true do
-    if redstone.getInput('top') then
-        pcall(Main)
-        -- Main()
-    else
-        print('Service Offline - Flip the lever on top!')
+    -- if redstone.getInput('top') then
+        -- pcall(Main)
+        Main()
+    -- else
+    --     print('Service Offline - Flip the lever on top!')
     end
     LOOPS = LOOPS + 1
     print('Sleeping', WAIT_SECONDS, 'seconds. Loop #', LOOPS, 'of', REBOOT_AFTER_LOOPS )

@@ -8,7 +8,7 @@ local COLONY_NAME = 'Nolins'
 function Main()
     local honey_source = peripheral.wrap(honey_storage)
     local honeyUsed = 0
-     honeyUsed = honeyUsed + honey_source.pushFluid(honey_generator)
+    honeyUsed = honeyUsed + honey_source.pushFluid(honey_generator)
 
     local data = {
         timeStamp = os.epoch("utc"),
@@ -22,7 +22,6 @@ function Main()
     print(honeyUsed)
 end
 
-
 function WriteToFile(input, fileName, mode)
     local file = io.open(fileName, mode)
     io.output(file)
@@ -30,14 +29,13 @@ function WriteToFile(input, fileName, mode)
     io.close(file)
 end
 
-
 print('Starting Turtle Power (HIAHS)')
 while true do
-    if redstone.getInput('top') then
-        -- pcall(Main)
-        Main()
-    else
-        print('Service Offline - Flip the lever on top!')
-    end
+    -- if redstone.getInput('top') then
+    --     -- pcall(Main)
+    Main()
+    -- else
+    --     print('Service Offline - Flip the lever on top!')
+    -- end
     sleep(WAIT_SECONDS)
 end

@@ -1,24 +1,16 @@
 local WAIT_SECONDS = 30
 local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
-local warehouses = "minecolonies:warehouse" -- This is the restaraunt block
--- local warehouses = "minecolonies:colonyBuilding_0" -- This is the restaraunt block
-local honey_storage = 'fluidTank_5'
-local honey_bottler = 'create:depot_4'
 local MAXHONEYBOTTLES = 128
 
--- function FindAllWarehouses()
---     warehouses = {}
---     peripherals = peripheral.getNames()
---     for pni, perName in pairs(peripherals) do
---         if string.find(perName, WAREHOUSE) then
---             warehouses[#warehouses+1] = perName
---         end
---     end
---     return warehouses
--- end
+local warehouses = "minecolonies:warehouse"
+local honey_storage = 'fluidTank_5'
+local honey_bottler = 'create:depot_5'
+local honey_dispenser = 'create:spout_0'
 
 function Main()
-    peripherals = peripheral.getNames()
+    
+
+    local peripherals = peripheral.getNames()
     print('\n')
     -- HONEY BOTTLER
     for index, attached_peripheral in pairs(peripherals) do
@@ -95,12 +87,12 @@ end
 local LOOPS = 0
 print('Starting HONEY BOTTLER')
 while true do
-    if redstone.getInput('top') then
+    -- if redstone.getInput('top') then
         -- pcall(Main)
         Main()
-    else
-        print('Service Offline - Flip the lever on top!')
-    end
+    -- else
+        -- print('Service Offline - Flip the lever on top!')
+    -- end
     LOOPS = LOOPS + 1
     print('Sleeping', WAIT_SECONDS, 'seconds. Loop #', LOOPS, 'of', REBOOT_AFTER_LOOPS )
     sleep(WAIT_SECONDS)
