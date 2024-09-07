@@ -1,8 +1,7 @@
-local json = require "json"
-
-local WAIT_SECONDS = 120
-local REBOOT_AFTER_LOOPS = 30 -- REBOOT AFTER THIS MANY LOOPS
-local SMELT_FLESH = true
+---@diagnostic disable: undefined-field
+local WAIT_SECONDS = 180
+local REBOOT_AFTER_LOOPS = 6 -- REBOOT AFTER THIS MANY LOOPS
+local SMELT_FLESH = false
 
 local hives = 'productivebees:advanced_'
 local fuges = 'productivebees:centrifuge'
@@ -11,16 +10,13 @@ local blast_furnaces = 'minecraft:blast_furnace'
 local warehouses = "minecolonies:warehouse"
 -- local warehouse = peripheral.find("minecolonies:warehouse")
 
-local processed = {
-    name = "SeaShanty"
-}
-
 function Main()
     local peripherals = peripheral.getNames()
     local honey_storage = 'fluidTank_0'
     local furnaces_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}
+    local honey_bottler = 'create:depot_0'
 
     local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
@@ -65,7 +61,7 @@ function Main()
         -- TRANSFER COMBS TO FUGES
         for i, attached_peripheral in pairs(peripherals) do
             if string.find(attached_peripheral, hives) then
-                hive = peripheral.wrap(attached_peripheral)
+                local hive = peripheral.wrap(attached_peripheral)
 
                 for slot, item in pairs(hive.list()) do
                     if string.find(item.name, 'productivebees:') then
@@ -90,7 +86,7 @@ function Main()
             for slot, item in pairs(container.list()) do
                 if not string.find(item.name, 'productivebees:') then
                     -- GRAB RAW ORES FOR PROCESSING
-                    if string.find(item.name, ':raw_') or string.find(item.name, 'minecraft:ancient_debris') then
+                    if string.find(item.name, 'minecraft:raw_') or string.find(item.name, 'minecraft:ancient_debris') then
                         for f, blast_furnace in pairs(blast_furnaces_list) do
                             print('Firing:', item.name, blast_furnace)
                             local dest_blast_furnace = peripheral.wrap(blast_furnace)
@@ -129,15 +125,6 @@ function Main()
             end
         end
     end
-
-    processed = {
-        timeStamp = os.epoch("utc"),
-        SeaShanty = {
-            name = "SeaShanty",
-            hiveManagerTotalStored = 0
-        },
-    }
-    processed.SeaShanty['hiveManagerTotalStored'] = totalWarehousedThisRun
     print('\n\nItems warehoused:', totalWarehousedThisRun)
 end
 
@@ -202,13 +189,6 @@ function GetFromAnyWarehouse(itemName, destination, itemCount, guess)
     return foundCount
 end
 
-function WriteToFile(input, fileName, mode)
-    local file = io.open(fileName, mode)
-    io.output(file)
-    io.write(input)
-    io.close(file)
-end
-
 LOOPS = 0
 print('Starting HIVE MANAGER...')
 
@@ -221,13 +201,6 @@ while true do
     -- end
     LOOPS = LOOPS + 1
     print('Sleeping', WAIT_SECONDS, 'seconds. Loop #', LOOPS, 'of', REBOOT_AFTER_LOOPS)
-
-    -- write data
-    WriteToFile(json.encode(processed), "monitorData.json", "w")
-
-    -- clear data STORAGE
-    processed = {}
-
     sleep(WAIT_SECONDS)
     if LOOPS >= REBOOT_AFTER_LOOPS then os.reboot() end
 end

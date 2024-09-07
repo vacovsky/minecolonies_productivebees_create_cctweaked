@@ -1,16 +1,23 @@
 local WAIT_SECONDS = 30
 local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
-local MAXHONEYBOTTLES = 128
-
 local warehouses = "minecolonies:warehouse"
 local honey_storage = 'fluidTank_0'
 local honey_bottler = 'create:depot_0'
-local honey_dispenser = 'create:spout_0'
+
+
+-- function FindAllWarehouses()
+--     warehouses = {}
+--     peripherals = peripheral.getNames()
+--     for pni, perName in pairs(peripherals) do
+--         if string.find(perName, WAREHOUSE) then
+--             warehouses[#warehouses+1] = perName
+--         end
+--     end
+--     return warehouses
+-- end
 
 function Main()
-    
-
-    local peripherals = peripheral.getNames()
+    peripherals = peripheral.getNames()
     print('\n')
     -- HONEY BOTTLER
     for index, attached_peripheral in pairs(peripherals) do
@@ -91,8 +98,8 @@ while true do
         -- pcall(Main)
         Main()
     -- else
-        -- print('Service Offline - Flip the lever on top!')
-    -- end
+    --     print('Service Offline - Flip the lever on top!')
+    end
     LOOPS = LOOPS + 1
     print('Sleeping', WAIT_SECONDS, 'seconds. Loop #', LOOPS, 'of', REBOOT_AFTER_LOOPS )
     sleep(WAIT_SECONDS)
