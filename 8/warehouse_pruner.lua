@@ -4,7 +4,7 @@ local warehouses = 'minecolonies:warehouse'
 local TRASHCAN = 'ironchests:diamond_chest_1'
 COLONY_NAME = 'Nolins'
 
-local MIN_KEEP_COUNT = 1024
+local MIN_KEEP_COUNT = 2048
 local MAX_SLOTS_COUNT = 32
 
 -- ITEMS TO KEEP REGARDLESS OF VOLUME
