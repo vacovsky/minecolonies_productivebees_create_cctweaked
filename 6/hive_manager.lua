@@ -66,12 +66,12 @@ function Main()
         -- TRANSFER COMBS TO FUGES
         for i, attached_peripheral in pairs(peripherals) do
             if string.find(attached_peripheral, hives) then
-                hive = peripheral.wrap(attached_peripheral)
+                local hive = peripheral.wrap(attached_peripheral)
 
                 for slot, item in pairs(hive.list()) do
                     if string.find(item.name, 'productivebees:') then
                         for f, fuge in pairs(fuge_list) do
-                            dest_fuge = peripheral.wrap(fuge)
+                            local dest_fuge = peripheral.wrap(fuge)
                             -- print('Spinning:', item.name)
                             TransferItem(hive, slot, dest_fuge)
                         end
@@ -123,8 +123,11 @@ function Main()
                     end
                     -- LAST RESORT, SEND TO WAREHOUSE
                     totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
-                end
-                if string.find(item.name, 'productivebees:sugarbag_honeycomb') then
+                elseif string.find(item.name, 'productivebees:draconic_') then
+                    -- SEND TO WAREHOUSE
+                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                
+                elseif string.find(item.name, 'productivebees:sugarbag_honeycomb') then
                     totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
                 end
             end
