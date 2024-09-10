@@ -16,6 +16,7 @@ local processed = {
 }
 
 function Main()
+    local honey_collected = 0
     local peripherals = peripheral.getNames()
     local honey_storage = 'fluidTank_5'
     local furnaces_list = {}
@@ -84,7 +85,7 @@ function Main()
             local container = peripheral.wrap(attached_peripheral)
             -- PUSH HONEY TO HONEY STORAGE VESSEL
             print('Tranferring honey')
-            container.pushFluid(honey_storage)
+            honey_collected = honey_collected + container.pushFluid(honey_storage)
 
             -- PUSH THE REST
             for slot, item in pairs(container.list()) do
@@ -134,11 +135,14 @@ function Main()
         timeStamp = os.epoch("utc"),
         Nolins = {
             name = "Nolins",
-            hiveManagerTotalStored = 0
+            hiveManagerTotalStored = 0,
+            honeyCollected = 0
         },
     }
     processed.Nolins['hiveManagerTotalStored'] = totalWarehousedThisRun
+    processed.Nolins['honeyCollected'] = honey_collected
     print('\n\nItems warehoused:', totalWarehousedThisRun)
+    print('\n\nHoney Stored:', honey_collected)
 end
 
 function TransferItem(sourceStorage, sourceSlot, dest)

@@ -1,6 +1,6 @@
 local honey_storage = 'fluidTank_5'
-local honey_generator = 'productivebees:honey_generator_1'
-local WAIT_SECONDS = 60
+local honey_generator = 'productivebees:honey_generator'
+local WAIT_SECONDS = 10
 local json = require "json"
 local COLONY_NAME = 'Nolins'
 
@@ -8,7 +8,13 @@ local COLONY_NAME = 'Nolins'
 function Main()
     local honey_source = peripheral.wrap(honey_storage)
     local honeyUsed = 0
-    honeyUsed = honeyUsed + honey_source.pushFluid(honey_generator)
+
+    local peripherals = peripheral.getNames()
+    for index, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, honey_generator) then
+            honeyUsed = honeyUsed + honey_source.pushFluid(attached_peripheral)
+        end
+    end
 
     local data = {
         timeStamp = os.epoch("utc"),
