@@ -15,6 +15,7 @@ var WATCHED_FILES = []string{
 	`D:\FarmColonies\world\computercraft\computer\8\warehouseVacuum.json`,
 	`D:\FarmColonies\world\computercraft\computer\6\honeyPowerData.json`,
 	`D:\FarmColonies\world\computercraft\computer\6\foodHoney.json`,
+	`D:\FarmColonies\world\computercraft\computer\15\bulletUse.json`,
 
 	// Sea Shanty
 	// `D:\FarmColonies\world\computercraft\computer\4\monitorData.json`,
