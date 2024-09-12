@@ -7,6 +7,7 @@ local SMELT_FLESH = true
 local hives = 'productivebees:advanced_'
 local fuges = 'productivebees:centrifuge'
 local furnaces = 'minecraft:furnace'
+local generators = 'scguns:polar_generator'
 local blast_furnaces = 'minecraft:blast_furnace'
 local warehouses = "minecolonies:warehouse"
 -- local warehouse = peripheral.find("minecolonies:warehouse")
@@ -20,6 +21,7 @@ function Main()
     local peripherals = peripheral.getNames()
     local honey_storage = 'fluidTank_5'
     local furnaces_list = {}
+    local generators_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}
 
@@ -32,6 +34,10 @@ function Main()
 
         if string.find(attached_peripheral, furnaces) then
             furnaces_list[#furnaces_list + 1] = attached_peripheral
+        end
+
+        if string.find(attached_peripheral, generators) then
+            generators_list[#generators_list + 1] = attached_peripheral
         end
 
         if string.find(attached_peripheral, blast_furnaces) then
@@ -122,6 +128,12 @@ function Main()
                         local dest_furnace = peripheral.wrap(furnace)
                         print('Fueling:', furnace)
                         TransferItemWithSlot(container, slot, dest_furnace, 64, 2)
+                    end
+                    -- FILL GENERATORS WITH FUEL
+                    for f, genny in pairs(generators_list) do
+                        local dest_genny = peripheral.wrap(genny)
+                        print('Fueling:', genny)
+                        TransferItemWithSlot(container, slot, dest_genny, 64, 1)
                     end
                     -- LAST RESORT, SEND TO WAREHOUSE
                     totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
