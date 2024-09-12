@@ -15,7 +15,7 @@ function Main()
     -- HONEY BOTTLER
     for index, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, honey_bottler) then
-            container = peripheral.wrap(attached_peripheral)
+            local container = peripheral.wrap(attached_peripheral)
             -- PLACE FILLED BOTTLES IN WAREHOUSE
             for slot, item in pairs(container.list()) do
                 if item.name == 'minecraft:honey_bottle' then

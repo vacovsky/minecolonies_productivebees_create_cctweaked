@@ -40,9 +40,11 @@ function Main()
     end
 
     for index, attached_peripheral in pairs(peripherals) do
-        -- TRANSFER WOOD/STONE TO WAREHOUSE
+        -- TRANSFER WOOD/STONE/HONEY BOTTLES TO WAREHOUSE
         if string.find(attached_peripheral, hives) then
             local container = peripheral.wrap(attached_peripheral)
+            local bottles_replenished = GetFromAnyWarehouse('minecraft:glass_bottle', attached_peripheral, 4, false)
+            print('Stocked', bottles_replenished, 'bottles to', attached_peripheral)
             for slot, item in pairs(container.list()) do
                 if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
                     print('Warehousing:', item.name)
