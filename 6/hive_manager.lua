@@ -140,7 +140,9 @@ function Main()
                 elseif string.find(item.name, 'productivebees:draconic_') then
                     -- SEND TO WAREHOUSE
                     totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
-                
+                elseif string.find(item.name, 'productivebees:wither_') then
+                    -- SEND TO WAREHOUSE
+                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
                 elseif string.find(item.name, 'productivebees:sugarbag_honeycomb') then
                     totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
                 end
