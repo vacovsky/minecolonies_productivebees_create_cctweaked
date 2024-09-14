@@ -1,4 +1,4 @@
-local honey_storage = 'fluidTank_5'
+local honey_storage = 'fluidTank_13'
 local honey_generator = 'productivebees:honey_generator'
 local WAIT_SECONDS = 10
 local json = require "json"

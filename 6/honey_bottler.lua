@@ -3,7 +3,7 @@ local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
 local MAXHONEYBOTTLES = 128
 
 local warehouses = "minecolonies:warehouse"
-local honey_storage = 'fluidTank_5'
+local honey_storage = 'fluidTank_13'
 local honey_bottler = 'create:depot_5'
 local honey_dispenser = 'create:spout_0'
 

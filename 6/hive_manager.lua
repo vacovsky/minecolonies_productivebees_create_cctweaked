@@ -1,6 +1,6 @@
 local json = require "json"
 
-local WAIT_SECONDS = 120
+local WAIT_SECONDS = 30
 local REBOOT_AFTER_LOOPS = 30 -- REBOOT AFTER THIS MANY LOOPS
 local SMELT_FLESH = true
 
@@ -19,7 +19,7 @@ local processed = {
 function Main()
     local honey_collected = 0
     local peripherals = peripheral.getNames()
-    local honey_storage = 'fluidTank_5'
+    local honey_storage = 'fluidTank_13'
     local furnaces_list = {}
     local generators_list = {}
     local blast_furnaces_list = {}

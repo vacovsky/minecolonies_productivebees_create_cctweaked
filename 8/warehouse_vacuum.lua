@@ -1,5 +1,5 @@
-local whi = require 'warehouse_interface'
-local json = require "json"
+local whi = require 'lib/warehouse_interface'
+local json = require "lib/json"
 
 local COLONY_NAME = 'Nolins'
 

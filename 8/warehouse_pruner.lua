@@ -1,5 +1,5 @@
-local json = require "json"
-local whi = require 'warehouse_interface'
+local json = require "lib/json"
+local whi = require 'lib/warehouse_interface'
 local warehouses = 'minecolonies:warehouse'
 local TRASHCAN = 'ironchests:diamond_chest_1'
 COLONY_NAME = 'Nolins'

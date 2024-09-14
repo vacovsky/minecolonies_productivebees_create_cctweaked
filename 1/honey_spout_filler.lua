@@ -1,5 +1,5 @@
 
-local honey_storage = 'fluidTank_5'
+local honey_storage = 'fluidTank_13'
 local honey_dispenser = 'create:spout_0'
 
 while true do
