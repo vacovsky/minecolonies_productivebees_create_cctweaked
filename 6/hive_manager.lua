@@ -6,6 +6,7 @@ local SMELT_FLESH = true
 
 local hives = 'productivebees:advanced_'
 local fuges = 'productivebees:centrifuge'
+local heated_fuges = 'productivebees:heated_centrifuge'
 local furnaces = 'minecraft:furnace'
 local generators = 'scguns:polar_generator'
 local blast_furnaces = 'minecraft:blast_furnace'
@@ -24,6 +25,8 @@ function Main()
     local generators_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}
+    local heated_fuge_list = {}
+
 
     local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
@@ -42,6 +45,9 @@ function Main()
 
         if string.find(attached_peripheral, blast_furnaces) then
             blast_furnaces_list[#blast_furnaces_list + 1] = attached_peripheral
+        end
+        if string.find(attached_peripheral, heated_fuges) then
+            heated_fuge_list[#heated_fuge_list + 1] = attached_peripheral
         end
     end
 
@@ -77,6 +83,13 @@ function Main()
                 local hive = peripheral.wrap(attached_peripheral)
 
                 for slot, item in pairs(hive.list()) do
+                    if string.find(item.name, 'productivebees:') then
+                        for f, fuge in pairs(fuge_list) do
+                            local dest_fuge = peripheral.wrap(fuge)
+                            -- print('Spinning:', item.name)
+                            TransferItem(hive, slot, dest_fuge)
+                        end
+                    end
                     if string.find(item.name, 'productivebees:') then
                         for f, fuge in pairs(fuge_list) do
                             local dest_fuge = peripheral.wrap(fuge)

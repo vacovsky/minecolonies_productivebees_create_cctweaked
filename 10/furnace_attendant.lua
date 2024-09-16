@@ -7,10 +7,12 @@ local max_result_allowed = 512
 local furnaces = 'minecraft:furnace'
 local fuel = 'minecraft:coal'
 local raw_items = {
-    'minecraft:cobblestone',
-    'minecraft:clay_ball',
-    'minecraft:sand',
-    'minecraft:rotten_flesh'
+    -- 'minecraft:cobblestone',
+    -- 'minecraft:clay_ball',
+    -- 'minecraft:sand',
+    'minecraft:rotten_flesh',
+    -- 'scguns:raw_anthralite',
+    -- 'scguns:diamond_steel_blend',
 }
 
 
@@ -26,6 +28,7 @@ while true do
     local icm = whi.ItemCountMap()
     for _, raw_item in pairs(raw_items) do
         local moved = 0
+        
         if icm[raw_item].count >= minraw_before_smelt then
             for _, furnace in pairs(furnaces_list) do
 
