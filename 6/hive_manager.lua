@@ -6,8 +6,8 @@ local SMELT_FLESH = true
 
 local hives = 'productivebees:advanced_'
 local fuges = 'productivebees:centrifuge'
-local heated_fuges = 'productivebees:heated_centrifuge'
 local furnaces = 'minecraft:furnace'
+local heated_fuges = 'productivebees:heated_centrifuge'
 local generators = 'scguns:polar_generator'
 local blast_furnaces = 'minecraft:blast_furnace'
 local warehouses = "minecolonies:warehouse"
@@ -21,16 +21,16 @@ function Main()
     local honey_collected = 0
     local peripherals = peripheral.getNames()
     local honey_storage = 'fluidTank_13'
-    local furnaces_list = {}
     local generators_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}
+    local furnaces_list = {}
     local heated_fuge_list = {}
 
 
     local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
-    for index, attached_peripheral in pairs(peripherals) do
+    for _, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, fuges) then
             fuge_list[#fuge_list + 1] = attached_peripheral
         end
@@ -112,19 +112,19 @@ function Main()
             for slot, item in pairs(container.list()) do
                 if not string.find(item.name, 'productivebees:') then
                     -- GRAB RAW ORES FOR PROCESSING
-                    if string.find(item.name, ':raw_') or string.find(item.name, 'minecraft:ancient_debris') then
-                        for f, blast_furnace in pairs(blast_furnaces_list) do
-                            print('Firing:', item.name, blast_furnace)
-                            local dest_blast_furnace = peripheral.wrap(blast_furnace)
-                            TransferItemWithSlot(container, slot, dest_blast_furnace, 64, 1)
-                        end
-                        -- SMELT ROTTEN FLESH INTO LEATHER
-                        if SMELT_FLESH and string.find(item.name, 'rotten_flesh') then
-                            for f, furnace in pairs(furnaces_list) do
-                                print('Firing:', item.name, furnace)
-                                local dest_furnace = peripheral.wrap(furnace)
-                                TransferItemWithSlot(container, slot, dest_furnace, 64, 1)
-                            end
+                    -- if string.find(item.name, ':raw_') or string.find(item.name, 'minecraft:ancient_debris') then
+                    --     for f, blast_furnace in pairs(blast_furnaces_list) do
+                    --         print('Firing:', item.name, blast_furnace)
+                    --         local dest_blast_furnace = peripheral.wrap(blast_furnace)
+                    --         TransferItemWithSlot(container, slot, dest_blast_furnace, 64, 1)
+                    --     end
+                    -- end
+                    -- SMELT ROTTEN FLESH INTO LEATHER
+                    if SMELT_FLESH and string.find(item.name, 'rotten_flesh') then
+                        for f, furnace in pairs(furnaces_list) do
+                            print('Firing:', item.name, furnace)
+                            local dest_furnace = peripheral.wrap(furnace)
+                            TransferItemWithSlot(container, slot, dest_furnace, 64, 1)
                         end
                     end
                     -- OTHERWISE, SEND TO WAREHOUSE
