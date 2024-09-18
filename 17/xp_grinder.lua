@@ -41,7 +41,6 @@ function Main()
     end
 end
 
-
 while true do
     Main()
     sleep(15)
