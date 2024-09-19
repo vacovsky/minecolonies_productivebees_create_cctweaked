@@ -33,9 +33,9 @@ function Main()
     -- collect crushed ores and place into furnaces
     local crushed_raw_source = peripheral.wrap(CRUSHER_OUTPUT)
     for slot, item in pairs(crushed_raw_source.list()) do
-        for _, furance in pairs(furnaces_list) do
+        for _, furnaces in pairs(furnaces_list) do
             if string.find(item.name, CRUSHED_ORE_PREFIX) then
-                crushed_raw_source.pushItems(furance, slot)
+                crushed_raw_source.pushItems(furnaces, slot)
             end
         end
     end
