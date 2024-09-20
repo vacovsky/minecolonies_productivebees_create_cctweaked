@@ -6,7 +6,7 @@ local COLONY_NAME = 'Nolins'
 
 local source_inventories = {
     'create_mechanical_extruder:mechanical_extruder_1',
-    -- 'ironchests:gold_barrel_0',
+    'ironchests:gold_barrel_1',
     'minecraft:chest_1',
     'enderstorage:ender_chest_1'
 }
@@ -25,8 +25,10 @@ function Vacuum()
             if string.find(p, inventory) then
                 local inv = peripheral.wrap(inventory)
                 for slot, item in pairs(inv.list()) do
-                    print('Moving', item.name, 'to warehouse')
-                    deposited = deposited + whi.DepositInAnyWarehouse(inventory, slot)
+                    if not item.name 'create:experience_nugget' then
+                        print('Moving', item.name, 'to warehouse')
+                        deposited = deposited + whi.DepositInAnyWarehouse(inventory, slot)
+                    end
                 end
             end
         end
@@ -45,5 +47,5 @@ end
 print('Starting warehouse vacuum...')
 while true do
     Vacuum()
-    sleep(15)
+    sleep(5)
 end

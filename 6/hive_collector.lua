@@ -24,7 +24,7 @@ while true do
         local pcombdest = peripheral.wrap(combs_dest)
         for slot, item in pairs(phive.list()) do
             if not string.find(item.name, 'minecraft:') and
-             string.find(item.name, 'comb') then
+             string.find(item.name, 'comb') and not string.find(item.name, 'sugarbag') then
                 pcombdest.pullItems(hive, slot)
             else
                 whi.DepositInAnyWarehouse(hive, slot)
