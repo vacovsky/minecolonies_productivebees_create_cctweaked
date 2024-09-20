@@ -1,47 +1,42 @@
+local tsdb = require "lib/tsdb"
+local whi = require "lib/whi"
+
 local CRUSHER_INPUT = 'ironchests:iron_barrel_2'
 local CRUSHER_OUTPUT = 'ironchests:gold_barrel_1'
 local ORE_PREFIX = ':raw_'
 local CRUSHED_ORE_PREFIX = ':crushed_'
 
-local fuges = 'productivebees:centrifuge'
-local furnaces = 'blast_furnace'
-
+local furnaces = 'furnace'
+-- local rawsrc = 'enderstorage:ender_chest_1'
 
 function Main()
-    local fuge_list = {}
     local furnaces_list = {}
     local peripherals = peripheral.getNames()
     for _, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, fuges) then
-            fuge_list[#fuge_list + 1] = attached_peripheral
-        end
         if string.find(attached_peripheral, furnaces) then
             furnaces_list[#furnaces_list + 1] = attached_peripheral
         end
     end
 
-    -- grab all raw ores from centrifuges and place into chest_1
-    for _, fuge in pairs(fuge_list) do
-        local raw_source = peripheral.wrap(fuge)
-        for slot, item in pairs(raw_source.list()) do
-            if string.find(item.name, ORE_PREFIX) then
-                raw_source.pushItems(CRUSHER_INPUT, slot)
-            end
-        end
-    end
+    -- grab all raw ores from warehouse and place into chest_1
+    local crushingCnt = whi.GetFromAnyWarehouse(true, ORE_PREFIX, CRUSHER_INPUT)
+    if crushingCnt > 0 then print(crushingCnt, 'crushing') end
 
     -- collect crushed ores and place into furnaces
     local crushed_raw_source = peripheral.wrap(CRUSHER_OUTPUT)
     for slot, item in pairs(crushed_raw_source.list()) do
         for _, furnaces in pairs(furnaces_list) do
             if string.find(item.name, CRUSHED_ORE_PREFIX) then
-                crushed_raw_source.pushItems(furnaces, slot)
+                local crushedCnt = crushed_raw_source.pushItems(furnaces, slot)
+                if crushedCnt > 0 then print(crushedCnt, 'crushed') end
             end
         end
     end
 end
 
 while true do
-    Main()
-    sleep(15)
+    if not pcall(Main) then print('Main() failed to complete') end
+
+    -- Main()
+    sleep(5)
 end

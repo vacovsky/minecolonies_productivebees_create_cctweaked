@@ -7,11 +7,6 @@ COLONY_NAME = 'Nolins'
 local MIN_KEEP_COUNT = 2048
 local MAX_SLOTS_COUNT = 32
 
--- ITEMS TO KEEP REGARDLESS OF VOLUME
-local BLACKLIST = {
-    'minecraft:nether_quartz'
-}
-
 function PruneWarehouse()
     local burnedCount = 0
     local itemCountMap = {}
@@ -77,5 +72,5 @@ while true do
     print('Starting warehouse prune...')
     PruneWarehouse()
     -- pcall(PruneWarehouse)
-    sleep(600)
+    sleep(5)
 end
