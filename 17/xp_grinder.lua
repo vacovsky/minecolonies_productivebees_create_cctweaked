@@ -4,7 +4,7 @@ local ORE_PREFIX = ':raw_'
 local CRUSHED_ORE_PREFIX = ':crushed_'
 
 local fuges = 'productivebees:centrifuge'
-local furnaces = 'furnace'
+local furnaces = 'blast_furnace'
 
 
 function Main()

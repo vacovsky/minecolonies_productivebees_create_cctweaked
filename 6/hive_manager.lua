@@ -1,21 +1,7 @@
-local json = require "json"
-
-local WAIT_SECONDS = 30
-local REBOOT_AFTER_LOOPS = 30 -- REBOOT AFTER THIS MANY LOOPS
-local SMELT_FLESH = true
-
-local hives = 'productivebees:advanced_'
-local fuges = 'productivebees:centrifuge'
-local furnaces = 'minecraft:furnace'
-local heated_fuges = 'productivebees:heated_centrifuge'
-local generators = 'scguns:polar_generator'
-local blast_furnaces = 'minecraft:blast_furnace'
-local warehouses = "minecolonies:warehouse"
--- local warehouse = peripheral.find("minecolonies:warehouse")
-
-local processed = {
-    name = "Nolins"
-}
+local json = require "lib/json"
+local tsdb = require "lib/tsdb"
+local vars = require "lib/constants"
+local whi = require "lib/whi"
 
 function Main()
     local honey_collected = 0
@@ -31,82 +17,80 @@ function Main()
     local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
     for _, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, fuges) then
+        if string.find(attached_peripheral, vars.fuges) then
             fuge_list[#fuge_list + 1] = attached_peripheral
         end
 
-        if string.find(attached_peripheral, furnaces) then
+        if string.find(attached_peripheral, vars.furnaces) then
             furnaces_list[#furnaces_list + 1] = attached_peripheral
         end
 
-        if string.find(attached_peripheral, generators) then
+        if string.find(attached_peripheral, vars.generators) then
             generators_list[#generators_list + 1] = attached_peripheral
         end
 
-        if string.find(attached_peripheral, blast_furnaces) then
+        if string.find(attached_peripheral, vars.blast_furnaces) then
             blast_furnaces_list[#blast_furnaces_list + 1] = attached_peripheral
         end
-        if string.find(attached_peripheral, heated_fuges) then
+        if string.find(attached_peripheral, vars.heated_fuges) then
             heated_fuge_list[#heated_fuge_list + 1] = attached_peripheral
         end
     end
 
-    for index, attached_peripheral in pairs(peripherals) do
-        -- TRANSFER WOOD/STONE/HONEY BOTTLES TO WAREHOUSE
-        if string.find(attached_peripheral, hives) then
-            local container = peripheral.wrap(attached_peripheral)
-            local bottles_replenished = GetFromAnyWarehouse('minecraft:glass_bottle', attached_peripheral, 4, false)
+
+    for _, attached_peripheral in pairs(peripherals) do
+        if string.find(attached_peripheral, vars.hives) then
+            -- RESTOCK BOTTLES
+            local bottles_replenished = whi.GetFromAnyWarehouse('minecraft:glass_bottle', attached_peripheral, 4, false)
             print('Stocked', bottles_replenished, 'bottles to', attached_peripheral)
-            for slot, item in pairs(container.list()) do
-                if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
-                    print('Warehousing:', item.name)
-                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+
+            -- TRANSFER COMBS TO FUGES
+            local hive = peripheral.wrap(attached_peripheral)
+
+            for slot, item in pairs(hive.list()) do
+                if string.find(item.name, 'productivebees:') then
+                    for f, fuge in pairs(fuge_list) do
+                        pcall(hive.pushItems(fuge, slot))
+                        -- TransferItem(hive, slot, fuge)
+                    end
+                end
+                if string.find(item.name, 'productivebees:') then
+                    for f, fuge in pairs(fuge_list) do
+                        pcall(hive.pushItems(fuge, slot))
+                        -- TransferItem(hive, slot, fuge)
+                    end
+                end
+                
+                -- TRANSFER WOOD/STONE/HONEY BOTTLES TO WAREHOUSE
+                for slot, item in pairs(hive.list()) do
+                    if not string.find(item.name, 'productivebees:') and not string.find(item.name, 'minecrfaft:glass_bottle') then
+                        totalWarehousedThisRun = totalWarehousedThisRun + whi.DepositInAnyWarehouse(attached_peripheral, slot)
+                        print('Warehoused:', item.name)
+                    end
                 end
             end
+            -- END HIVES
         end
 
         -- REMOVE SMELTED ITEMS FROM BLAST FURNACES
-        if string.find(attached_peripheral, blast_furnaces) then
+        if string.find(attached_peripheral, vars.blast_furnaces) then
             local container = peripheral.wrap(attached_peripheral)
-            totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, 3)
+            totalWarehousedThisRun = totalWarehousedThisRun + whi.DepositInAnyWarehouse(container, 3)
         end
 
         -- REMOVE SMELTED ITEMS FROM FURNACES
-        if string.find(attached_peripheral, furnaces) then
+        if string.find(attached_peripheral, vars.furnaces) then
             local container = peripheral.wrap(attached_peripheral)
-            totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, 3)
+            totalWarehousedThisRun = totalWarehousedThisRun + whi.DepositInAnyWarehouse(container, 3)
         end
 
-        -- TRANSFER COMBS TO FUGES
-        for i, attached_peripheral in pairs(peripherals) do
-            if string.find(attached_peripheral, hives) then
-                local hive = peripheral.wrap(attached_peripheral)
-
-                for slot, item in pairs(hive.list()) do
-                    if string.find(item.name, 'productivebees:') then
-                        for f, fuge in pairs(fuge_list) do
-                            local dest_fuge = peripheral.wrap(fuge)
-                            -- print('Spinning:', item.name)
-                            TransferItem(hive, slot, dest_fuge)
-                        end
-                    end
-                    if string.find(item.name, 'productivebees:') then
-                        for f, fuge in pairs(fuge_list) do
-                            local dest_fuge = peripheral.wrap(fuge)
-                            -- print('Spinning:', item.name)
-                            TransferItem(hive, slot, dest_fuge)
-                        end
-                    end
-                end
-            end
-        end
 
         -- TRANSFER FUGE-PROCESSED MATERIALS TO WAREHOUSE
-        if string.find(attached_peripheral, fuges) then
+        if string.find(attached_peripheral, vars.fuges) then
             local container = peripheral.wrap(attached_peripheral)
             -- PUSH HONEY TO HONEY STORAGE VESSEL
-            print('Tranferring honey')
             honey_collected = honey_collected + container.pushFluid(honey_storage)
+            print('honey ->', honey_collected)
 
             -- PUSH THE REST
             for slot, item in pairs(container.list()) do
@@ -120,7 +104,7 @@ function Main()
                     --     end
                     -- end
                     -- SMELT ROTTEN FLESH INTO LEATHER
-                    if SMELT_FLESH and string.find(item.name, 'rotten_flesh') then
+                    if vars.SMELT_FLESH and string.find(item.name, 'rotten_flesh') then
                         for f, furnace in pairs(furnaces_list) do
                             print('Firing:', item.name, furnace)
                             local dest_furnace = peripheral.wrap(furnace)
@@ -128,7 +112,8 @@ function Main()
                         end
                     end
                     -- OTHERWISE, SEND TO WAREHOUSE
-                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                    totalWarehousedThisRun = totalWarehousedThisRun +
+                    whi.DepositInAnyWarehouse(attached_peripheral, slot)
                 elseif string.find(item.name, 'productivebees:wax') then
                     -- FILL BLAST FURNACES WITH FUEL
                     for f, blast_furnace in pairs(blast_furnaces_list) do
@@ -149,121 +134,51 @@ function Main()
                         TransferItemWithSlot(container, slot, dest_genny, 64, 1)
                     end
                     -- LAST RESORT, SEND TO WAREHOUSE
-                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                    totalWarehousedThisRun = totalWarehousedThisRun +
+                    whi.DepositInAnyWarehouse(attached_peripheral, slot)
                 elseif string.find(item.name, 'productivebees:draconic_') then
                     -- SEND TO WAREHOUSE
-                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                    totalWarehousedThisRun = totalWarehousedThisRun +
+                    whi.DepositInAnyWarehouse(conattached_peripheraltainer, slot)
                 elseif string.find(item.name, 'productivebees:wither_') then
                     -- SEND TO WAREHOUSE
-                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                    totalWarehousedThisRun = totalWarehousedThisRun +
+                    whi.DepositInAnyWarehouse(attached_peripheral, slot)
                 elseif string.find(item.name, 'productivebees:sugarbag_honeycomb') then
-                    totalWarehousedThisRun = totalWarehousedThisRun + DepositInAnyWarehouse(container, slot)
+                    totalWarehousedThisRun = totalWarehousedThisRun +
+                    whi.DepositInAnyWarehouse(attached_peripheral, slot)
                 end
             end
         end
     end
 
-    processed = {
-        timeStamp = os.epoch("utc"),
-        Nolins = {
-            name = "Nolins",
-            hiveManagerTotalStored = 0,
-            honeyCollected = 0
-        },
+    local data = {
+        hiveManagerTotalStored = totalWarehousedThisRun,
+        honeyCollected = honey_collected,
     }
-    processed.Nolins['hiveManagerTotalStored'] = totalWarehousedThisRun
-    processed.Nolins['honeyCollected'] = honey_collected
-    print('\n\nItems warehoused:', totalWarehousedThisRun)
-    print('\n\nHoney Stored:', honey_collected)
+
+    tsdb.WriteOutput(vars.COLONY_NAME, data, vars.OUTPUT_FILE)
 end
 
 function TransferItem(sourceStorage, sourceSlot, dest)
-    sourceStorage.pushItems(peripheral.getName(dest), sourceSlot)
+    sourceStorage.pushItems(dest, sourceSlot)
 end
 
 function TransferItemWithSlot(sourceStorage, sourceSlot, dest, limit, destSlot)
     sourceStorage.pushItems(peripheral.getName(dest), sourceSlot, limit, destSlot)
 end
 
-function DepositInAnyWarehouse(sourceStorage, sourceSlot)
-    local movedItemCount = 0
-    local peripherals = peripheral.getNames()
-    local warehouses_list = {}
-    for index, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
-            warehouses_list[#warehouses_list + 1] = attached_peripheral
-        end
-    end
-    for whi, warehouse in pairs(warehouses_list) do
-        movedItemCount = movedItemCount + sourceStorage.pushItems(warehouse, sourceSlot)
-    end
-    return movedItemCount
-end
-
-function GetFromAnyWarehouse(itemName, destination, itemCount, guess)
-    -- COLLECT WAREHOUSE NAMES
-    local peripherals = peripheral.getNames()
-    local warehouses_list = {}
-    for index, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
-            -- print(attached_peripheral)
-            warehouses_list[#warehouses_list + 1] = attached_peripheral
-        end
-    end
-
-    -- SEARCH EACH WAREHOUSE FOR ITEM
-    local foundCount = 0
-    for whi, warehouse in pairs(warehouses_list) do
-        local whp = peripheral.wrap(warehouse)
-        for slot, item in pairs(whp.list()) do
-            -- must be exact name match
-            if not guess then
-                if item.name == itemName then
-                    local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount)
-                    foundCount = foundCount + pushedCount
-                    if foundCount >= itemCount then
-                        print('Order successfully filled!')
-                        -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                        print('Returned', itemCount, itemName)
-                        goto found
-                    end
-                end
-            end
-            -- TODO fuzzy match here
-            -- end fuzzy
-        end
-        if itemCount < foundCount then print('Only located', foundCount, 'of', itemCount) end
-        ::found::
-    end
-    return foundCount
-end
-
-function WriteToFile(input, fileName, mode)
-    local file = io.open(fileName, mode)
-    io.output(file)
-    io.write(input)
-    io.close(file)
-end
-
 LOOPS = 0
-print('Starting HIVE MANAGER...')
+print('Starting HIVE MANAGER 2...')
 
 while true do
     -- if redstone.getInput('top') then
     -- pcall(Main)
     Main()
-    -- else
-    --     print('Service Offline - Flip the lever on top!')
-    -- end
+
+
     LOOPS = LOOPS + 1
-    print('Sleeping', WAIT_SECONDS, 'seconds. Loop #', LOOPS, 'of', REBOOT_AFTER_LOOPS)
-
-    -- write data
-    WriteToFile(json.encode(processed), "monitorData.json", "w")
-
-    -- clear data STORAGE
-    processed = {}
-
-    sleep(WAIT_SECONDS)
-    if LOOPS >= REBOOT_AFTER_LOOPS then os.reboot() end
+    print('Sleeping', vars.WAIT_SECONDS, 'Loop #', LOOPS, 'of', vars.REBOOT_AFTER_LOOPS)
+    sleep(vars.WAIT_SECONDS)
+    if LOOPS >= vars.REBOOT_AFTER_LOOPS then os.reboot() end
 end
