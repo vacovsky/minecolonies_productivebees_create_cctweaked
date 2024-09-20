@@ -16,7 +16,4 @@ vars.heated_fuges = 'productivebees:heated_centrifuge'
 
 vars.generators = '_generator'
 vars.warehouses = "minecolonies:warehouse"
-
-vars.TRASHCAN = 'ironchests:diamond_chest_1'
-
 return vars

@@ -5,17 +5,17 @@ local whi = require "lib/whi"
 
 function Main()
     local honey_collected = 0
+    local peripherals = peripheral.getNames()
     local honey_storage = 'fluidTank_16'
     local generators_list = {}
     local blast_furnaces_list = {}
     local fuge_list = {}
     local furnaces_list = {}
     local heated_fuge_list = {}
-    
-    
+
+
     local totalWarehousedThisRun = 0
     -- CREATE LISTS OF PERIPHERAL PROCESSORS
-    local peripherals = peripheral.getNames()
     for _, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, vars.fuges) then
             fuge_list[#fuge_list + 1] = attached_peripheral

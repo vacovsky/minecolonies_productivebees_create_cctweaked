@@ -1,6 +1,6 @@
 local json = require "json"
 
-local honey_storage = 'fluidTank_13'
+local honey_storage = 'fluidTank_16'
 local honey_dispenser = 'create:spout_0'
 local COLONY_NAME = "Nolins"
 

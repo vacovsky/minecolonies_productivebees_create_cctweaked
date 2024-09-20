@@ -7,8 +7,8 @@ local COLONY_NAME = 'Nolins'
 local source_inventories = {
     'create_mechanical_extruder:mechanical_extruder_1',
     -- 'ironchests:gold_barrel_0',
-    'minecraft:chest_1'
-    -- 'ironchests:iron_barrel_1'
+    'minecraft:chest_1',
+    'enderstorage:ender_chest_1'
 }
 
 function WriteToFile(input, fileName, mode)
@@ -45,5 +45,5 @@ end
 print('Starting warehouse vacuum...')
 while true do
     Vacuum()
-    sleep(600)
+    sleep(15)
 end

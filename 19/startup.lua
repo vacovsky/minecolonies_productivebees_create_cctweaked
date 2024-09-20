@@ -1,0 +1,6 @@
+-- shell.openTab("hive_manager")
+-- shell.openTab("honey_bottler")
+shell.openTab("honey_harvester")
+shell.openTab("fuge_loader")
+shell.openTab("fuge_unloader")
+-- shell.openTab("honey_spout_filler")
