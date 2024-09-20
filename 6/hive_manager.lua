@@ -139,7 +139,7 @@ function Main()
                 elseif string.find(item.name, 'productivebees:draconic_') then
                     -- SEND TO WAREHOUSE
                     totalWarehousedThisRun = totalWarehousedThisRun +
-                    whi.DepositInAnyWarehouse(conattached_peripheraltainer, slot)
+                    whi.DepositInAnyWarehouse(attached_peripheral, slot)
                 elseif string.find(item.name, 'productivebees:wither_') then
                     -- SEND TO WAREHOUSE
                     totalWarehousedThisRun = totalWarehousedThisRun +
@@ -173,8 +173,8 @@ print('Starting HIVE MANAGER 2...')
 
 while true do
     -- if redstone.getInput('top') then
-    -- pcall(Main)
-    Main()
+    pcall(Main)
+    -- Main()
 
 
     LOOPS = LOOPS + 1
