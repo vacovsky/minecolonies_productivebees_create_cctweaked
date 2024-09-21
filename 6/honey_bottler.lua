@@ -28,9 +28,7 @@ function Main()
     for _, hive in pairs(net.ListMatchingDevices('productivebees:advanced_')) do 
         restockNum = whi.GetFromAnyWarehouse('minecraft:glass_bottle', hive, 64, false)
     end
-
     if restockNum > 0 then print('Restocked', restockNum, 'glass bottles') end
-    print('\n')
 end
 
 

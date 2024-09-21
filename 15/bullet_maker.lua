@@ -1,5 +1,7 @@
 local json = require "lib/json"
-local whi = require 'lib/warehouse_interface'
+local whi = require 'lib/whi'
+local tsdb = require 'lib/tsdb'
+local net = require 'lib/network'
 
 local COLONY_NAME = 'Nolins'
 
@@ -22,18 +24,9 @@ function Main()
     local gunpresses = {}
     local shellcatchers = {}
 
-    local peripherals = peripheral.getNames()
-    for _, perName in pairs(peripherals) do
-        if string.find(perName, gunpress) then
-            gunpresses[#gunpresses + 1] = perName
-        end
-        if string.find(perName, turret) then
-            turrets[#turrets + 1] = perName
-        end
-        if string.find(perName, shellcatcher) then
-            shellcatchers[#shellcatchers + 1] = perName
-        end
-    end
+    gunpresses = net.ListMatchingDevices(gunpress)
+    turrets = net.ListMatchingDevices(turret)
+    shellcatchers = net.ListMatchingDevices(shellcatcher)
 
     -- MOVE EMPTY CASINGS TO WAREHOUSE
     for _, t in pairs(shellcatchers) do
@@ -53,32 +46,23 @@ function Main()
         whi.GetFromAnyWarehouse(false, powder, p, 64, 2)
         whi.GetFromAnyWarehouse(false, slug, p, 64, 3)
 
-        -- SEND FINISHED ROUNDS TO TURRET?
+        -- SEND FINISHED ROUNDS TO TURRETS
         for _, t in pairs(turrets) do
             bullets_made = bullets_made + peripheral.wrap(t).pullItems(p, 6)
         end
-        --  WAREHOUSE
-        -- whi.DepositInAnyWarehouse(p, 6)
     end
-    local data = {
-        timeStamp = os.epoch("utc"),
-        bullets = {
-            name = COLONY_NAME,
-            bulletsMadeCount = bullets_made
-        }
-    }
-    print('Made', bullets_made, 'Standard Copper Round')
-    WriteToFile(json.encode(data), "bulletUse.json", "w")
-end
+    tsdb.WriteOutput(COLONY_NAME, {
+        bulletsMadeCount = bullets_made
+    }, 'bulletUse.json')
 
-function WriteToFile(input, fileName, mode)
-    local file = io.open(fileName, mode)
-    io.output(file)
-    io.write(input)
-    io.close(file)
+    if bullets_made > 0 then
+        print(bullets_made, 'Standard Copper Round')
+    end
 end
 
 while true do
-    Main()
-    sleep(10)
+    local success = pcall(Main)
+    -- Main()
+    if not success then print('Failed to run Main - investigate!') end
+    sleep(5)
 end

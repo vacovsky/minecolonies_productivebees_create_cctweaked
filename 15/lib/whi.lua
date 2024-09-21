@@ -77,6 +77,7 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
 end
 
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
+    if not itemCount then itemCount = 64 end
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
