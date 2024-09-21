@@ -15,7 +15,7 @@ local raw_items = {
     'create:crushed_raw_gold',
     'create:crushed_raw_copper',
     'create:crushed_raw_iron',
-    'create:crushed_raw_anthralite',
+    'scguns:crushed_raw_anthralite',
     'scguns:diamond_steel_blend',
     -- 'minecraft:rotten_flesh',
     -- 'minecraft:raw_gold',
@@ -36,26 +36,24 @@ function GetFurnaces()
 end
 
 function AttendFurnaces()
-    local icm = whi.ItemCountMap()
     for _, raw_item in pairs(raw_items) do
         local moved = 0
-        if icm[raw_item].count >= minraw_before_smelt then
-            for _, furnace in pairs(GetFurnaces()) do
-                -- Refuel furnaces
-                print(whi.GetFromAnyWarehouse(false, coalfuel, furnace, 64, 2), 'fueled (coal)')
-                print(whi.GetFromAnyWarehouse(false, waxfuel, furnace, 64, 2), 'fueled (wax)')
-                -- move smelted items to warehouse
-                print(whi.DepositInAnyWarehouse(furnace, 3), 'deposited')
-                -- move item for smelting to furnace
-                moved = moved + whi.GetFromAnyWarehouse(false, raw_item, furnace, 64, 1)
-                if moved >= 32 then
-                    goto next_item
-                end
+        for _, furnace in pairs(GetFurnaces()) do
+            -- Refuel furnaces
+            print(whi.GetFromAnyWarehouse(false, coalfuel, furnace, 64, 2), 'fueled (coal)')
+            print(whi.GetFromAnyWarehouse(false, waxfuel, furnace, 64, 2), 'fueled (wax)')
+            -- move smelted items to warehouse
+            print(whi.DepositInAnyWarehouse(furnace, 3), 'deposited')
+            -- move item for smelting to furnace
+            moved = moved + whi.GetFromAnyWarehouse(false, raw_item, furnace, 64, 1)
+            if moved >= 32 then
+                goto next_item
             end
         end
         ::next_item::
     end
 end
+
 while true do
     -- if not pcall(AttendFurnaces) then print('AttendFurnaces() failed to complete') end
     AttendFurnaces()
