@@ -1,6 +1,6 @@
 local json = require "lib/json"
 
-local whi = require 'lib/warehouse_interface'
+local whi = require 'lib/whi'
 COLONY_NAME = 'Nolins'
 JUNKLIST_CHEST = ''
 

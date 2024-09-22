@@ -1,4 +1,4 @@
-local warehouse_interface = { _version = '0.0.1' }
+local warehouse_interface = { _version = '0.0.2' }
 
 local warehouses = "minecolonies:warehouse"
 
@@ -77,6 +77,7 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
 end
 
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
+    if not itemCount then itemCount = 64 end
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
@@ -100,6 +101,17 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
                         print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
                         print('Returned', itemCount, itemName)
+                        goto found
+                    end
+                end
+            else
+                if string.find(item.name, itemName) then
+                    local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
+                    foundCount = foundCount + pushedCount
+                    if foundCount >= itemCount then
+                        print('Order successfully filled!')
+                        -- EXIT WHEN WE HAVE DELIVERED ENOUGH
+                        print('Returned', itemCount, item.name)
                         goto found
                     end
                 end

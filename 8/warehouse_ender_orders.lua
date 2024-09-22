@@ -1,4 +1,4 @@
-local whi = require 'lib/warehouse_interface'
+local whi = require 'lib/whi'
 
 
 local orderDest = "enderstorage:ender_chest_0"
