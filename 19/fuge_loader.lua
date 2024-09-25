@@ -23,11 +23,11 @@ while true do
         local pcombsrc = peripheral.wrap(combs_source)
         for slot, item in pairs(pcombsrc.list()) do
             if string.find(item.name, 'productivebees:') then
-                pfuge.pullItems(combs_source, slot)
+                combsMoved = combsMoved + pfuge.pullItems(combs_source, slot)
             end
         end
     end
 
-    print('Tranferred', combsMoved, 'combs')
+    if combsMoved > 0 then print('Tranferred', combsMoved, 'combs') end
     sleep(5)
 end

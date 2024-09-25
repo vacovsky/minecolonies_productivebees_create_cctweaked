@@ -31,6 +31,7 @@ function Main()
 
     -- MOVE EMPTY CASINGS TO WAREHOUSE
     for _, t in pairs(shellcatchers) do
+        -- print(t)
         local sc = peripheral.wrap(t)
         for slot, item in pairs(sc.list()) do
             if string.find(item.name, casing) then

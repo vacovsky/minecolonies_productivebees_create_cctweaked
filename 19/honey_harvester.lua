@@ -27,7 +27,7 @@ while true do
         local pfuge = peripheral.wrap(fuge)
         honeyPushed = honeyPushed + pfuge.pushFluid(honey_destination)
     end
-    print('Tranferred', honeyPushed, 'honey to ender tank')
+    if honeyPushed > 0 then print('Tranferred', honeyPushed, 'honey to ender tank') end
     sleep(5)
     honeyPushed = 0
 end
