@@ -27,7 +27,7 @@ function Main()
     gunpresses = net.ListMatchingDevices(gunpress)
     turrets = net.ListMatchingDevices(turret)
     shellcatchers = net.ListMatchingDevices(shellcatcher)
-    shellcatchers[#shellcatchers+1] = 'enderstorage:ender_chest_6'
+    turrets[#turrets+1] = 'enderstorage:ender_chest_6'
 
     -- MOVE EMPTY CASINGS TO WAREHOUSE
     for _, t in pairs(shellcatchers) do
