@@ -4,7 +4,7 @@ local net = require "lib/network"
 local WAIT_SECONDS = 30
 local REBOOT_AFTER_LOOPS = 60 -- REBOOT AFTER THIS MANY LOOPS
 local honey_bottler = 'create:depot_5'
-local destination = 'minecolonies:colonybuilding_1'
+local destination = 'minecolonies:colonybuilding_2'
 
 -- HONEY BOTTLER
 function Main()
@@ -22,7 +22,7 @@ function Main()
 
 
     for _, hive in pairs(net.ListMatchingDevices('productivebees:advanced_')) do
-        restockNum = whi.GetFromAnyWarehouse('minecraft:glass_bottle', hive, 64, false)
+        restockNum = restockNum + whi.GetFromAnyWarehouse(false, 'minecraft:glass_bottle', hive, 64)
     end
     if restockNum > 0 then print('Restocked', restockNum, 'glass bottles') end
 end
