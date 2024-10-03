@@ -15,6 +15,8 @@ local raw_items = {
     'create:crushed_raw_gold',
     'create:crushed_raw_copper',
     'create:crushed_raw_iron',
+    'create:crushed_raw_zinc',
+    'create:crushed_raw_silver',
     'scguns:crushed_raw_anthralite',
     'scguns:diamond_steel_blend',
     -- 'minecraft:rotten_flesh',

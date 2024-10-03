@@ -1,3 +1,6 @@
-shell.openTab("guard_swords")
+shell.openTab("netherite_armor_protection")
+-- shell.openTab("guard_swords")
 shell.openTab("xp_grinder")
 shell.openTab("xp_nugget_collector")
+shell.openTab("lava_distributer")
+shell.openTab("enchanter_juice_distributer")

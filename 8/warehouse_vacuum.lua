@@ -8,7 +8,8 @@ local source_inventories = {
     'create_mechanical_extruder:mechanical_extruder_1',
     -- 'ironchests:gold_barrel_1',
     'minecraft:chest_1',
-    'enderstorage:ender_chest_1'
+    'enderstorage:ender_chest_1',
+    'minecraft:barrel_12'
 }
 
 function WriteToFile(input, fileName, mode)

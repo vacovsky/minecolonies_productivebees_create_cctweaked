@@ -8,19 +8,19 @@ import (
 
 var WATCHED_FILES = []string{
 	// Nolins
-	`D:\FarmColonies\world\computercraft\computer\14\monitorData.json`,
-	`D:\FarmColonies\world\computercraft\computer\6\monitorData.json`,
-	`D:\FarmColonies\world\computercraft\computer\8\prunerData.json`,
-	`D:\FarmColonies\world\computercraft\computer\8\incineratorData.json`,
-	`D:\FarmColonies\world\computercraft\computer\8\warehouseVacuum.json`,
-	`D:\FarmColonies\world\computercraft\computer\6\honeyPowerData.json`,
-	`D:\FarmColonies\world\computercraft\computer\6\foodHoney.json`,
-	`D:\FarmColonies\world\computercraft\computer\15\bulletUse.json`,
-	`D:\FarmColonies\world\computercraft\computer\17\xp_drain_1.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/14/monitorData.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/6/monitorData.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/8/prunerData.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/8/incineratorData.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/8/warehouseVacuum.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/6/honeyPowerData.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/6/foodHoney.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/15/bulletUse.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/17/xp_drain_1.json`,
 
 	// Sea Shanty
-	// `D:\FarmColonies\world\computercraft\computer\4\monitorData.json`,
-	`D:\FarmColonies\world\computercraft\computer\9\monitorData.json`,
+	// `/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/4/monitorData.json`,
+	`/home/amp/.ampdata/instances/FarmColonies01/Minecraft/world/computercraft/computer/9/monitorData.json`,
 }
 
 func main() {

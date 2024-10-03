@@ -1,5 +1,5 @@
 -- puts fire aspect on stocked diamond swords to kill aliens
-local whi = require 'lib/warehouse_interface'
+local whi = require 'lib/whi'
 local FIRE_ASPECT = 'create_enchantment_industry:blaze_enchanter_2'
 
 
