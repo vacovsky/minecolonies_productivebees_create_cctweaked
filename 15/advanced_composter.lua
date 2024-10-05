@@ -2,10 +2,10 @@ local whi = require "lib/whi"
 local net = require "lib/network"
 
 local avanced_composter_input = 'minecraft:hopper_8'
-local avanced_composter_output = 'minecraft:hopper_7'
+local avanced_composter_output = 'biomancy:maw_hopper_0'
 
 
-local input_item = 'minecraft:wheat'
+local input_item = 'minecraft:apple'
 
 function LoadComposter()
     -- add compostable items

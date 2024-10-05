@@ -1,7 +1,7 @@
 local whi = require 'lib/whi'
 
 
-local orderDest = "enderstorage:ender_chest_0"
+local orderDest = "enderstorage:ender_chest_13"
 local WAREHOUSE = 'minecolonies:warehouse'
 local protocol = "ender_orders"
 local MAX_ITEM_COUNT = 64
